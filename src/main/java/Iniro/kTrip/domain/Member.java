@@ -1,4 +1,4 @@
-package domain;
+package Iniro.kTrip.domain;
 
 import jakarta.persistence.*;
 import lombok.*;

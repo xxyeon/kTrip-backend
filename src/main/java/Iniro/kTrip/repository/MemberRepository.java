@@ -1,6 +1,6 @@
-package repository;
+package Iniro.kTrip.repository;
 
-import domain.Member;
+import Iniro.kTrip.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

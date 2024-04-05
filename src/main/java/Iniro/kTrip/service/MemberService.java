@@ -1,11 +1,9 @@
-package service;
+package Iniro.kTrip.service;
 
-import domain.Member;
-import dto.MemberDto;
-import jakarta.transaction.Transactional;
+import Iniro.kTrip.domain.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import repository.MemberRepository;
+import Iniro.kTrip.repository.MemberRepository;
 
 import java.util.Optional;
 

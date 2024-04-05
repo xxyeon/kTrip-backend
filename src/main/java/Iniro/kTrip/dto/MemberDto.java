@@ -1,4 +1,4 @@
-package dto;
+package Iniro.kTrip.dto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
