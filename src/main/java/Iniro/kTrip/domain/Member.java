@@ -11,7 +11,7 @@ import lombok.*;
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int member_id;
+    private int mid;
 
     @Column(length = 20)
     private String id;
