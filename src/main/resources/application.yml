@@ -1,6 +1,12 @@
 #시큐리티 관련 설정입니다. pull하고 .yml은 .gitignore 해주세요
 spring:
-  security:
-    user:
-      name: user
-      password: 1234
+  server:
+    port: ${PORT}
+
+
+  datasource:
+      # 아래처럼 환경 변수로 설정하면 yml도 git에 올릴 수 있다고 합니다.
+      url: ${DB_JDBC_URL}
+      username: ${DB_USERNAME}
+      password: ${DB_PASSWORD}
+      driver-class-name: org.mariadb.jdbc.Driver
