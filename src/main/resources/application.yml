@@ -1,6 +1,0 @@
-#시큐리티 관련 설정입니다. pull하고 .yml은 .gitignore 해주세요
-spring:
-  security:
-    user:
-      name: user
-      password: 1234
