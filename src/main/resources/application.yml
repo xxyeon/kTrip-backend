@@ -1,6 +1,15 @@
 #시큐리티 관련 설정입니다. pull하고 .yml은 .gitignore 해주세요
 spring:
-  security:
-    user:
-      name: user
-      password: 1234
+  datasource:
+    url: jdbc:mariadb://localhost:3306/kTrip
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: root
+    password: 1234
+  jpa:
+      generate-ddl: true
+      hibernate:
+        ddl-auto: update
+
+jwt:
+  expiration_time: 86400000 #1일
+  secret: 7ZWt7ZW0OTntmZTsnbTtjIXtlZzqta3snYTrhIjrqLjshLjqs

@@ -16,6 +16,9 @@ public class Member {
     @Column(length = 20)
     private String id;
     @Column(length = 20)
+    private String password;
+
+    @Column(length = 20)
     private String email;
     @Column(length = 20)
     private String nickname;
