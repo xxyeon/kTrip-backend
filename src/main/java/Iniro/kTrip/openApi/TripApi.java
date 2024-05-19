@@ -23,9 +23,27 @@ public enum TripApi {
     CAT2("cat2="),
     CAT3("cat3="),
     MODIFIED_TIME("modifiedtime="),
+    //공통정보 조회
+    KEYWORD("keyword="),
+    DEFAULT_YN("defaultYN="),
+    FIRST_IMAGE_YN("firstImageYN="),
+    AREA_CODE_YN("areacodeYN="),
+    CAT_CODE_YN("catcodeYN="),
+    ADDR_INFO_YN("addrinfoYN="),
+    MAP_INFO_YN("mapinfoYN="),
+    OVERVIEW_YN("overviewYN="),
+
+    CONTENT_ID("contentId="),
+
 
     //api목록
-    AREABASEDLIST1("/areaBasedList1")
+    AREA_BASED_LIST1("/areaBasedList1"),
+    SEARCH_KEYWORD1("/searchKeyword1"),
+    SEARCH_STAY1("/searchStay1"),
+    DETAIL_COMMON1("/detailCommon1"),
+    DETAIL_INTRO("/detailIntro1"),
+    DETAIL_INFO("/detailInfo1"),
+
     ;
 
     private final String value;
