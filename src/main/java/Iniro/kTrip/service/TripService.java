@@ -3,12 +3,9 @@ package Iniro.kTrip.service;
 import Iniro.kTrip.dto.ResTripInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.minidev.json.parser.ParseException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -16,16 +13,18 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static Iniro.kTrip.openApi.TripApi.*;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class TripService {
 
-    private final static String END_POINT = "http://apis.data.go.kr/B551011/KorService1";
-
     public List<ResTripInfo> recommandTrip(int areaCode, int sigunguCode) {
 
-        String reqUrl = "/areaBasedList1?numOfRows=12&pageNo=1&MobileOS=ETC&MobileApp=App&_type=json&areaCode=" + areaCode + "&sigunguCode=" + sigunguCode + "&serviceKey=jJL7RJtEplRWyT4h%252Bo9Cggy%252FZQEb%252FClx%252BSKxloGuo3wy%252FyoauDsMyxqll890ix4J6hKWnwLQP%252BCrn96rmXvXjA%253D%253D";
+        String reqUrl = AREABASEDLIST1.getValue() +
+                "?" + AREA_CODE.getValue() + areaCode + "&" +
+                SIGUNGU_CODE.getValue() + sigunguCode;
 
         List<ResTripInfo> resTripInfos = fetch(reqUrl);
         return resTripInfos;
@@ -56,7 +55,6 @@ public class TripService {
 
         // items는 JSON ->  그걸 또 배열로 가져온다
         JSONArray jsonItemList = (JSONArray) jsonItems.get("item");
-        System.out.println(jsonItemList);
         List<ResTripInfo> result = new ArrayList<>();
 
         for (Object o : jsonItemList) {
@@ -85,6 +83,18 @@ public class TripService {
     }
 
     private String makeUrl(String url){
-        return END_POINT + url;
+        StringBuffer sbf = new StringBuffer();
+        sbf.append(END_POINT.getValue());
+        sbf.append(url);
+        sbf.append("&");
+        sbf.append(MOBILE_APP.getValue());
+        sbf.append("&");
+        sbf.append(MOBILE_OS.getValue());
+        sbf.append("&");
+        sbf.append(SERVICE_KEY.getValue());
+        sbf.append("&");
+        sbf.append(TYPE.getValue());
+        System.out.println(sbf.toString());
+        return sbf.toString();
     }
 }
