@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity(name = "Member")
+@Data
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,6 +18,8 @@ public class Member {
     private String id;
     @Column(length = 20)
     private String email;
+    @Column(length = 20)
+    private String password;
     @Column(length = 20)
     private String nickname;
     @Column(length = 20)
