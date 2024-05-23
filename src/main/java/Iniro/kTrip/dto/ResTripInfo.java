@@ -8,7 +8,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 @Builder
-public class ResTripInfo implements ResJson{
+public class ResTripInfo extends ResJson{
 
     private String addr1;
     private String addr2;
@@ -17,8 +17,6 @@ public class ResTripInfo implements ResJson{
     private String cat1;
     private String cat2;
     private String cat3;
-    private int contentid;
-    private int contenttypeid;
     private String firstimage;
     private String firstimage2;
     private String mapx;

@@ -7,9 +7,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 @Builder
-public class ResStayInfo implements ResJson{
-    private String contentId;
-    private String contentTypeId;
+public class ResStayInfo extends ResJson{
     private String roomCode;
     private String roomTitle;
     private String roomSize;
@@ -55,13 +53,5 @@ public class ResStayInfo implements ResJson{
         }
     }
 
-//    public void setRoomImg(RoomImg roomImg1, RoomImg roomImg2, RoomImg roomImg3, RoomImg roomImg4, RoomImg roomImg5) {
-//        this.roomImg1 = roomImg1;
-//        this.roomImg2 = roomImg2;
-//        this.roomImg3 = roomImg3;
-//        this.roomImg4 = roomImg4;
-//        this.roomImg5  = roomImg5;
-//
-//    }
 
 }

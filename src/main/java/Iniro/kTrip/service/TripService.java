@@ -106,13 +106,11 @@ public class TripService {
     }
 
     private ResTripInfo buildTripInfo(JSONObject item) {
-        return ResTripInfo.builder()
+        ResTripInfo resTripInfo = ResTripInfo.builder()
                 .title((String) item.get("title"))
                 .addr1((String) item.get("addr1"))
                 .addr2((String) item.get("addr2"))
                 .areacode(Integer.parseInt((String) item.get("areacode")))
-                .contentid(Integer.parseInt((String) item.get("contentid")))
-                .contenttypeid(Integer.parseInt((String) item.get("contenttypeid")))
                 .firstimage((String) item.get("firstimage"))
                 .firstimage2((String) item.get("firstimage2"))
                 .sigungucode(Integer.parseInt((String) item.get("sigungucode")))
@@ -123,12 +121,13 @@ public class TripService {
                 .homepage((String) item.get("homepage"))
                 .overview((String) item.get("overview"))
                 .build();
+        setResJson(item, resTripInfo);
+        return resTripInfo;
     }
 
     private ResStayInfo buildStayInfo(JSONObject item) {
-        return ResStayInfo.builder()
-                .contentId((String) item.get("conentid"))
-                .contentTypeId((String) item.get("contenttypeid"))
+
+        ResStayInfo resStayInfo = ResStayInfo.builder()
                 .roomBaseCount((String) item.get("roombasecount"))
                 .roomCode((String) item.get("roomcode"))
                 .roomTitle((String) item.get("roomtitle"))
@@ -161,9 +160,15 @@ public class TripService {
                 .roomImg4(new ResStayInfo.RoomImg((String) item.get("roomimg4"), (String) item.get("roomimg4alt")))
                 .roomImg5(new ResStayInfo.RoomImg((String) item.get("roomimg5"), (String) item.get("roomimg5alt")))
                 .roomSize2((String) item.get("roomsize2")).build();
+        setResJson(item, resStayInfo);
 
+        return resStayInfo;
 
+    }
 
+    private void setResJson(JSONObject item, ResJson resJson) {
+        resJson.setContentId((String) item.get("contentid"));
+        resJson.setContentTypeId((String) item.get("contenttypeid"));
     }
 
     private String makeUrl(String url){
