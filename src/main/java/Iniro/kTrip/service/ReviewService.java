@@ -12,6 +12,7 @@ import Iniro.kTrip.domain.ReviewData;
 import Iniro.kTrip.dao.*;
 import Iniro.kTrip.domain.*;
 import Iniro.kTrip.dto.*;
+import Iniro.kTrip.util.ReviewConverter;
 import lombok.*;
 import java.util.List;
 @AllArgsConstructor
@@ -20,25 +21,24 @@ public class ReviewService {
     @Autowired
     ReviewRepository reviewRepository;
 
-    public void reviewRegister(Review review){reviewRepository.save(review);}
-    public List<Review> reviewLoad(int ctypeid, int cid){return reviewRepository.findByCtypeidAndCid(ctypeid, cid);}
-    public Review reviewCreate(ReviewData reviewData){
-        Review newReview = new Review();
-        Member member = new Member();
-        member.setMid(reviewData.getMid());
-
+    public void registerReview(Review review){reviewRepository.save(review);}
+    public Review createReview(ReviewData reviewData){
         LocalDateTime localDateTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDateTime = localDateTime.format(formatter);
 
-        newReview.setMember(member);
-        newReview.setCtypeid(reviewData.getCtypeid());
-        newReview.setCid(reviewData.getCid());
-        newReview.setPoint(reviewData.getPoint());
-        newReview.setContent(reviewData.getContent());
-        newReview.setWritedate(formattedDateTime);
-
-        return newReview;
+        return Review.builder()
+                .member(Member.builder().mid(reviewData.getMid()).build())
+                .ctypeid(reviewData.getCtypeid())
+                .cid(reviewData.getCid())
+                .point(reviewData.getPoint())
+                .content(reviewData.getContent())
+                .writedate(reviewData.getWritedate())
+                .build();
     }
-
+    public List<ReviewDto> getReviewDtos(int ctypeid, int cid) {
+        return reviewRepository.findByCtypeidAndCid(ctypeid, cid).stream()
+                .map(ReviewConverter::convertToDto)
+                .collect(Collectors.toList());
+    }
 }
