@@ -1,0 +1,23 @@
+name: Feature Report
+description: File a Feature Report
+title: "[Feature]: "
+labels: ["feature"]
+
+body:
+  - type: textarea
+    id: feature-contents
+    attributes:
+      label: Feature 설명
+      description: 작업할 Feature에 대한 설명을 적어주세요.
+      placeholder: ex. 사용자 위치 기반 기능
+    validations:
+      required: true
+  - type: markdown
+    id: check-complete-feature
+    attributes:
+      value: |
+        ##  TODO   
+        - [ ] 구현할 기능
+        - [ ] 구현할 기능
+    validations:
+      required: false
