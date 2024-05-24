@@ -11,7 +11,7 @@ body:
       description: Bug에 대한 설명 작성
       placeholder: ex. openAPI 호출 문제
       value: |
-         ##  시나리오   
+        ##  시나리오   
         - 버그 발생 상황에 대한 시나리오를 적어주세요.   
         ## 예상한 결과
         - 예상했던 결과는 어떤 것이었는지 알려주세요.   
