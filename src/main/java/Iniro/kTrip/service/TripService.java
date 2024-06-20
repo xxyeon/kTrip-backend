@@ -31,7 +31,7 @@ import static Iniro.kTrip.openApi.TripApi.*;
 @RequiredArgsConstructor
 public class TripService {
 
-    public Result recommandTrip(String areaCode, String sigunguCode) {
+    public Result recommendTrip(String areaCode, String sigunguCode) {
         String area_code = areaCode != null ? areaCode : "";
         String sigungu_code = sigunguCode != null ? sigunguCode : "";
         String reqUrl = AREA_BASED_LIST1.getValue() +
@@ -300,7 +300,7 @@ public class TripService {
 
     }
 
-    public Object recommandByLocation(String mapX, String mapY, String radius) {
+    public Object recommendByLocation(String mapX, String mapY, String radius) {
         //radius null이면 기본으로 max값 적용(2000)
         if (radius == null) {
             radius = "2000";

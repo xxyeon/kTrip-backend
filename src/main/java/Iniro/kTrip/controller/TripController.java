@@ -16,9 +16,9 @@ public class TripController {
     private final TripService tripService;
 
     @GetMapping
-    public ResponseEntity<?> recommandTrip(String areaCode, String sigunguCode) {
+    public ResponseEntity<?> recommendTrip(String areaCode, String sigunguCode) {
 
-        return ResponseEntity.ok().body(tripService.recommandTrip(areaCode, sigunguCode));
+        return ResponseEntity.ok().body(tripService.recommendTrip(areaCode, sigunguCode));
     }
 
     @GetMapping("/search")
@@ -60,8 +60,8 @@ public class TripController {
      * 위치기반 여행지 추천
      */
     @GetMapping("/location")
-    public ResponseEntity<?> recommandByLocation(String mapX, String mapY, String radius) {
-        return ResponseEntity.ok().body(tripService.recommandByLocation(mapX, mapY, radius));
+    public ResponseEntity<?> recommendByLocation(String mapX, String mapY, String radius) {
+        return ResponseEntity.ok().body(tripService.recommendByLocation(mapX, mapY, radius));
     }
 
 
@@ -69,7 +69,7 @@ public class TripController {
      * 지역별 음식점 추천
      */
     @GetMapping("/food")
-    public ResponseEntity<?> recommandFood(String areaCode, String sigunguCode, @RequestParam(required = false) String cat3) {
+    public ResponseEntity<?> recommendFood(String areaCode, String sigunguCode, @RequestParam(required = false) String cat3) {
         return ResponseEntity.ok().body(tripService.recommendFood(areaCode, sigunguCode, cat3));
     }
 
@@ -77,7 +77,7 @@ public class TripController {
      * 지역별 쇼핑몰 추천
      */
     @GetMapping("/shopping")
-    public ResponseEntity<?> recommandShopping(String areaCode, String sigunguCode, @RequestParam(required = false) String cat3) {
+    public ResponseEntity<?> recommendShopping(String areaCode, String sigunguCode, @RequestParam(required = false) String cat3) {
         return ResponseEntity.ok().body(tripService.recommendShopping(areaCode, sigunguCode, cat3));
     }
 
