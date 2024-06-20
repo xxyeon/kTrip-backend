@@ -16,15 +16,15 @@ public class TripController {
     private final TripService tripService;
 
     @GetMapping
-    public ResponseEntity<?> recommandTrip(int areaCode, int sigunguCode) {
+    public ResponseEntity<?> recommendTrip(String areaCode, String sigunguCode) {
 
-        return ResponseEntity.ok().body(tripService.recommandTrip(areaCode, sigunguCode));
+        return ResponseEntity.ok().body(tripService.recommendTrip(areaCode, sigunguCode));
     }
 
     @GetMapping("/search")
     public ResponseEntity<?> getTrip(
             String keyword,
-            @RequestParam(required = false) Integer sigunguCode,
+            @RequestParam(required = false) String sigunguCode,
             @RequestParam(required = false) Integer areaCode,
             @RequestParam(required = false) Integer contentTypeId,
             @RequestParam(required = false) String cat1,
@@ -42,11 +42,11 @@ public class TripController {
     }
 
     @GetMapping("/detail_common")
-    public ResponseEntity<?> getTripCommon(String contentId) {
+    public ResponseEntity<?> getTripCommon(String contentId) { //servicekey error
         return ResponseEntity.ok().body(tripService.getTripInfo(contentId));
     }
 
-    @GetMapping ("/detail_intro")
+    @GetMapping("/detail_intro")
     ResponseEntity<?> getTripIntro(String contentId, String contentTypeId) {
         return ResponseEntity.ok().body(tripService.getTripIntro(contentId, contentTypeId));
     }
@@ -55,4 +55,30 @@ public class TripController {
     ResponseEntity<?> getStayInfo(String contentId, String contentTypeId) {
         return ResponseEntity.ok().body(tripService.getStayInfo(contentId, contentTypeId));
     }
+
+    /**
+     * 위치기반 여행지 추천
+     */
+    @GetMapping("/location")
+    public ResponseEntity<?> recommendByLocation(String mapX, String mapY, String radius) {
+        return ResponseEntity.ok().body(tripService.recommendByLocation(mapX, mapY, radius));
+    }
+
+
+    /**
+     * 지역별 음식점 추천
+     */
+    @GetMapping("/food")
+    public ResponseEntity<?> recommendFood(String areaCode, String sigunguCode, @RequestParam(required = false) String cat3) {
+        return ResponseEntity.ok().body(tripService.recommendFood(areaCode, sigunguCode, cat3));
+    }
+
+    /**
+     * 지역별 쇼핑몰 추천
+     */
+    @GetMapping("/shopping")
+    public ResponseEntity<?> recommendShopping(String areaCode, String sigunguCode, @RequestParam(required = false) String cat3) {
+        return ResponseEntity.ok().body(tripService.recommendShopping(areaCode, sigunguCode, cat3));
+    }
+
 }

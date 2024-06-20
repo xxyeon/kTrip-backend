@@ -7,11 +7,11 @@ import lombok.Getter;
 public enum TripApi {
 
     //쿼리 파라미터
-    END_POINT("http://apis.data.go.kr/B551011/KorService1"),
+    END_POINT("https://apis.data.go.kr/B551011/KorService1"),
     TYPE("_type=json"),
     MOBILE_OS("MobileOS=ETC"),
     MOBILE_APP("MobileApp=kTrip"),
-    SERVICE_KEY("serviceKey=jJL7RJtEplRWyT4h%252Bo9Cggy%252FZQEb%252FClx%252BSKxloGuo3wy%252FyoauDsMyxqll890ix4J6hKWnwLQP%252BCrn96rmXvXjA%253D%253D"),
+    SERVICE_KEY("serviceKey=qfksq1wPx%2BLiwQOC89X1lh12u2GNabRuWFLSn%2Bn4%2FX5HIf5QBuw9kS3jxOek82T%2BtkHYtfzboQfLTAv2PNMubA%3D%3D"),
     NUM_OF_ROWS("numOfRows=12"),
     PAGE_NO("pageNo=1"),
     LIST_YN("listYN="),
@@ -35,6 +35,11 @@ public enum TripApi {
 
     CONTENT_ID("contentId="),
 
+    //위치 정보 조회
+    MAP_X("mapX="),
+    MAP_Y("mapY="),
+    RADIUS("radius="),
+
 
     //api목록
     AREA_BASED_LIST1("/areaBasedList1"),
@@ -43,6 +48,7 @@ public enum TripApi {
     DETAIL_COMMON1("/detailCommon1"),
     DETAIL_INTRO("/detailIntro1"),
     DETAIL_INFO("/detailInfo1"),
+    LOCATION_BASED_LIST1("/locationBasedList1"),
 
     ;
 
