@@ -1,6 +1,16 @@
-#시큐리티 관련 설정입니다. pull하고 .yml은 .gitignore 해주세요
 spring:
-  security:
-    user:
-      name: user
-      password: 1234
+  application:
+    name: iniro.kTrip
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://127.0.0.1:3305/ktrip
+    username: root
+    password: 1234
+  jwt:
+    secret: vmfhaltmskdlstkfkdgodyroqkfwkdbalroqkfwkdbalaaaaaaaaaaaaaaaabbbbb
