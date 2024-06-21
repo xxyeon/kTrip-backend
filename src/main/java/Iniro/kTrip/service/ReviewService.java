@@ -33,7 +33,7 @@ public class ReviewService {
                 .cid(reviewData.getCid())
                 .point(reviewData.getPoint())
                 .content(reviewData.getContent())
-                .writedate(reviewData.getWritedate())
+                .writedate(formattedDateTime)
                 .build();
     }
     public List<ReviewDto> getReviewDtos(int ctypeid, int cid) {
