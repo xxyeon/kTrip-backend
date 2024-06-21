@@ -15,7 +15,6 @@ import static Iniro.kTrip.openApi.TripApi.TripEndpoint.AREA_CODE1;
 import static Iniro.kTrip.openApi.TripApi.TripQueryParam.AREA_CODE;
 import static Iniro.kTrip.openApi.TripApi.TripQueryParam.PAGE_NO;
 import static Iniro.kTrip.util.URLBuilder.fetch;
-import Iniro.kTrip.dto.ResJson;
 
 @Service
 @Slf4j
@@ -23,9 +22,9 @@ import Iniro.kTrip.dto.ResJson;
 public class AreaService {
 
     public static List<?> getAreaInfo(String areaCode, String pageNo) throws URISyntaxException {
-        String reqUrl = AREA_CODE1.getEndPoint() + "?";
+        String reqUrl = AREA_CODE1.getEndPoint() + "?" + PAGE_NO.getParam() + pageNo + "&";
         if(areaCode != null){
-            reqUrl += AREA_CODE.getParam() + areaCode + "&" + PAGE_NO.getParam() + pageNo + "&";
+            reqUrl += AREA_CODE.getParam() + areaCode;
         }
         @SuppressWarnings("unchecked")
         List<ResAreaInfo> resAreaInfos = (List<ResAreaInfo>) fetch(reqUrl);
