@@ -2,6 +2,7 @@ package Iniro.kTrip.openApi;
 
 import Iniro.kTrip.dto.ResAreaInfo;
 import Iniro.kTrip.service.AreaService;
+import Iniro.kTrip.service.TripService;
 import lombok.Getter;
 import org.json.simple.JSONObject;
 
@@ -11,7 +12,8 @@ public class TripApi {
 
     @Getter
     public enum TripEndpoint {
-        AREA_CODE1("/areaCode1", AreaService::buildAreaInfo);
+        AREA_CODE1("/areaCode1", AreaService::buildAreaInfo),
+        AREA_BASED_LIST1("/areaBasedList1", TripService::buildTripInfo);
 
         private final String endpoint;
         private final Function<JSONObject, Object> mapperFunction;
