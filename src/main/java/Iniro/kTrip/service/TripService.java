@@ -26,14 +26,18 @@ import static Iniro.kTrip.util.URLBuilder.fetch;
 @RequiredArgsConstructor
 public class TripService {
 
-    public static List<?> recommendTrip(String areaCode, String sigunguCode, String pageNo) throws URISyntaxException {
+    public static List<?> recommendTrip(String areaCode, String sigunguCode, String contenttypeid, String pageNo, String cat1) throws URISyntaxException {
         String area_code = areaCode != null ? areaCode : "";
         String sigungu_code = sigunguCode != null ? sigunguCode : "";
+        String content_type_id = contenttypeid != null ? contenttypeid : "";
         String page_no = pageNo != null ? pageNo : "1";
-        String reqUrl = AREA_BASED_LIST1.getEndPoint() +
-                "?" + AREA_CODE.getParam() + area_code + "&" +
+        String category1 = cat1 != null ? cat1 : "";
+        String reqUrl = AREA_BASED_LIST1.getEndPoint() + "?" +
+                AREA_CODE.getParam() + area_code + "&" +
                 SIGUNGU_CODE.getParam() + sigungu_code + "&" +
-                PAGE_NO.getParam() + page_no;
+                CONTENT_TYPE_ID.getParam() + content_type_id + "&" +
+                PAGE_NO.getParam() + page_no + "&" +
+                CAT1.getParam() + category1;
 
         return fetch(reqUrl);
     }
