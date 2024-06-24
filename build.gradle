@@ -43,7 +43,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-test'
 
 }
-/*
+
 def frontendDir = "$projectDir/src/main/front"
 
 sourceSets {
@@ -87,4 +87,4 @@ task copyReactBuildFiles(type: Copy) {
 
 tasks.named('test') {
 	useJUnitPlatform()
-}*/
+}
