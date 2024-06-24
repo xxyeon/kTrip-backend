@@ -1,4 +1,4 @@
-package Iniro.kTrip.token;
+package Iniro.kTrip.jwt;
 
 //import org.springframework.security.oauth2.jwt.Jwt;
 

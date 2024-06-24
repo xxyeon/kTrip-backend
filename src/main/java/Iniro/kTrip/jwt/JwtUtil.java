@@ -1,4 +1,4 @@
-package Iniro.kTrip.token;
+package Iniro.kTrip.jwt;
 
 import Iniro.kTrip.dto.JwtToken;
 import Iniro.kTrip.dto.MemberDto;

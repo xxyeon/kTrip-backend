@@ -1,5 +1,6 @@
 package Iniro.kTrip.domain;
 
+import Iniro.kTrip.dto.MemberDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -31,4 +32,13 @@ public class Member {
     private String refresh_token;
     @Column(length = 20)
     private String loginType;
+
+    // Oauth 구현할 때의 생성자.
+    public Member(String userId, String nickname, String email,String type){
+        this.id = userId;
+        this.password = "PassWord";
+        this.nickname = nickname;
+        this.email = email;
+        this.loginType = type;
+    }
 }

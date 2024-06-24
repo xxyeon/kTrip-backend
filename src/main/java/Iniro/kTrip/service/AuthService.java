@@ -2,11 +2,10 @@ package Iniro.kTrip.service;
 
 import Iniro.kTrip.domain.Member;
 import Iniro.kTrip.dto.MemberDto;
-import Iniro.kTrip.token.JwtUtil;
+import Iniro.kTrip.jwt.JWTUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,14 +13,13 @@ import org.springframework.stereotype.Service;
 import Iniro.kTrip.repository.MemberRepository;
 
 import java.util.Optional;
-import java.util.OptionalLong;
 
 @Service
 @RequiredArgsConstructor
 public class AuthService {
 
     private final MemberRepository memberRepository;
-    private final JwtUtil jwtUtil;
+    private final JWTUtil jwtUtil;
     private final PasswordEncoder encoder;
     private final ModelMapper modelMapper;
 
@@ -29,7 +27,7 @@ public class AuthService {
 
     // 회원가입 서비스 코드
     public boolean signUp(Member member){
-        Optional<Member> isExist = memberRepository.findById(member.getMember_id());
+        Optional<Member> isExist = memberRepository.findById(member.getId());
         if (isExist.isEmpty()){
             memberRepository.save(member);
             return true;
@@ -43,10 +41,10 @@ public class AuthService {
     @Transactional
     // 로그인 서비스 코드. 로그인 성공(회원 db에 존재하는 정보)하면 true
     public String login(Member member){
-        int member_id = member.getMember_id();
+        String id = member.getId();
+        Optional<Member> requestMember = memberRepository.findById(id);
         String password = member.getPassword();
 
-        Optional<Member> requestMember = memberRepository.findById(member_id);
         if (requestMember.isEmpty()){
             throw new UsernameNotFoundException("존재하지 않는 ID입니다.");
         }
