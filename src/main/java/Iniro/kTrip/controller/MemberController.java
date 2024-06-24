@@ -24,11 +24,13 @@ public class MemberController {
         else return "/home/login";
     }
 
-    @RequestMapping("/login")
+    @RequestMapping("/signIn")
     @GetMapping
-    public ResponseEntity<String> login(@RequestBody Member request){
+    public String login(@RequestBody Member request){
         String token = this.authService.login(request);
-        return ResponseEntity.status(HttpStatus.OK).body(token);
+        if (token != null)
+            return "/home";
+        else return "/home/login";
     }
 
 }

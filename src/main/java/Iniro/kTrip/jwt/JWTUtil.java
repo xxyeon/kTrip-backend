@@ -1,5 +1,7 @@
 package Iniro.kTrip.jwt;
 
+import Iniro.kTrip.domain.Member;
+import Iniro.kTrip.dto.MemberDto;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -7,7 +9,6 @@ import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
-import java.sql.SQLOutput;
 import java.util.Date;
 
 @Component
@@ -48,5 +49,14 @@ public class JWTUtil
                 .compact();
     }
 
+    public String createAccessToken(Member member, int expiredMs){
+        return Jwts.builder()
+                .claim("id", member.getId())
+                .claim("password", member.getPassword())
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis() + expiredMs))
+                .signWith(secretKey)
+                .compact();
+    }
 
 }

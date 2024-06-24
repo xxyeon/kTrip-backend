@@ -17,7 +17,8 @@ spring:
           naver:
             client-id: TUgEobrSNFtXP4INrJ7r
             client-secret: WFRCqDBZ3M
-            authorization-grant-type: client_credentials
+            authorization-grant-type: authorization_code
+            #authorization-grant-type: client_credentials
             redirect-uri: http://localhost:8080/login/oauth2/code/naver
             scope:
               - email
@@ -35,10 +36,11 @@ spring:
 
 
 
-jwt:
-  expiration_time: 86400000 #1일
-  secret: 7ZWt7ZW0OTntmZTsnbTtjIXtlZzqta3snYTrhIjrqLjshLjqs
+  jwt:
+    expiration_time: 86400000 #1일
+    secret: 7ZWt7ZW0OTntmZTsnbTtjIXtlZzqta3snYTrhIjrqLjshLjqs
+  #secret.key: 7ZWt7ZW0OTntmZTsnbTtjIXtlZzqta3snYTrhIjrqLjshLjqs
 
 logging:
   level:
-    org.springframework.security: DEBUG
+    org.hibernate.sql: DEBUG
