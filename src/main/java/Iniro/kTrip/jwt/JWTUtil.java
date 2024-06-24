@@ -32,17 +32,34 @@ public class JWTUtil
 
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("id",String.class);
     }
+    public String getEmail(String token)
+    {
+
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("email",String.class);
+    }
+    public String getNickname(String token)
+    {
+
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("nickname",String.class);
+    }
+    public String getName(String token)
+    {
+
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("name",String.class);
+    }
     public Boolean isExpired(String token) {
 
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration().before(new Date());
     }
-    public String createJwt(String category, String id, String role, Long expiredMs) {
+    public String createJwt(String category, String id, String role,String email,String nickname,String name, Long expiredMs) {
 
         return Jwts.builder()
                 .claim("category",category)
                 .claim("id", id)
                 .claim("role", role)
-                .issuedAt(new Date(System.currentTimeMillis()))
+                .claim("email", email)
+                .claim("nickname", nickname)
+                .claim("name", name)
                 .expiration(new Date(System.currentTimeMillis() + expiredMs))
                 .signWith(secretKey)
                 .compact();

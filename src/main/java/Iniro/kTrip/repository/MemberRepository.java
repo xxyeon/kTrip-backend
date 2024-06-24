@@ -14,8 +14,7 @@ public interface MemberRepository extends JpaRepository<Member,Integer>
     Member findById(String id);
     Boolean existsByRefreshToken(String refreshToken);
     Member findByRefreshToken(String refreshtoken);
-    @Transactional
-    void deleteByRefreshToken(String refreshToken);
+
 
 
 
