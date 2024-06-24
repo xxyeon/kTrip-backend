@@ -34,8 +34,8 @@ public class Member {
     @Column(name = "refresh_token") // @Column 애너테이션을 통해 데이터베이스 컬럼 이름을 명시
     private String refreshToken; // 자바 필드 이름은 camelCase를 사용하지만, 데이터베이스 컬럼 이름은 snake_case를 사용할 수 있습니다.
 
-    @Column(length = 20)
-    private String type;
+    @Column(length = 255)
+    private String loginType;
     @Column(length=255)
     private String expiration;
     @Column(length=255)

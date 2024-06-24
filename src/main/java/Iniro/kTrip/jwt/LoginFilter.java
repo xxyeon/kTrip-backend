@@ -39,8 +39,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         String id = request.getParameter("id");
         String password = obtainPassword(request);
 
-        System.out.println(id);
-
         // 스프링 시큐리티에서 id과 password를 검증하기 위해서는 token에 담아야 함
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(id, password, null); // Dto
 
@@ -88,24 +86,12 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         Date date = new Date(System.currentTimeMillis() + expiredMs);
         Member member=memberRepository.findById(id);
-        if(member==null)
+        if(member!=null)
         {
-            Member refreshMember = new Member();
-            refreshMember.setId(id);
-            refreshMember.setRefreshToken(refresh);
-            refreshMember.setExpiration(date.toString());
-
-            memberRepository.save(refreshMember);
-        }
-        else {
             member.setRefreshToken(refresh);
             member.setExpiration(date.toString());
             memberRepository.save(member);
         }
-
-
-
-
     }
     //로그인 실패시 실행하는 메소드
     @Override

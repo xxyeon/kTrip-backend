@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+
 @Entity(name="Favorite")
 @Getter
 @NoArgsConstructor
@@ -17,11 +18,14 @@ public class Favorite {
     private int fid;
 
     @ManyToOne
+
     @JoinColumn(name="mid")
+
     private Member member;
 
     @Column(length = 20)
     private String region;
+
 
     @Column
     private int cid;
@@ -30,4 +34,6 @@ public class Favorite {
     private int ctypeid;
 
 }
+
+
 

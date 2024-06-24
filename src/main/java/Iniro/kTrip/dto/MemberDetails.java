@@ -53,7 +53,10 @@ public class MemberDetails implements UserDetails {
     {
         return member.getEmail();
     }
-
+    public Integer getMid()
+    {
+        return member.getMid();
+    }
     @Override
     public boolean isAccountNonExpired() {
         return true;

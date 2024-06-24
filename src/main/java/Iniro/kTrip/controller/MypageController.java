@@ -45,8 +45,7 @@ public class MypageController
     @GetMapping("/mypage")
     public ResponseEntity<?> showMypage(@AuthenticationPrincipal MemberDetails memberDetails) {
         if (memberDetails != null) {
-            String id = memberDetails.getId();
-            Member member = mypageService.getMemberById(id);
+            Member member = mypageService.getMemberById(memberDetails.getId());
             Map<String, Object> response = new HashMap<>();
             response.put("name", member.getName());
             response.put("nickname", member.getNickname());
@@ -61,8 +60,8 @@ public class MypageController
     @GetMapping("/mypage/review")
     public ResponseEntity<?> showReview(@AuthenticationPrincipal MemberDetails memberDetails) {
         if (memberDetails != null) {
-            String id = memberDetails.getId();
-            Member member = mypageService.getMemberById(id);
+
+            Member member = mypageService.getMemberById(memberDetails.getId());
             List<Review> reviews = mypageService.FindReviews(member);
             return ResponseEntity.ok(reviews);
         } else {
@@ -88,8 +87,7 @@ public class MypageController
     @GetMapping("/mypage/want")
     public ResponseEntity<?> showWant(@AuthenticationPrincipal MemberDetails memberDetails) {
         if (memberDetails != null) {
-            String id = memberDetails.getId();
-            Member member = mypageService.getMemberById(id);
+            Member member = mypageService.getMemberById(memberDetails.getId());
             List<Want> wants = mypageService.FindWant(member);
             return ResponseEntity.ok(wants);
         } else {
@@ -102,8 +100,7 @@ public class MypageController
     @PreAuthorize("hasAuthority('DELETE_WANT')")
     public void deleteWant(@AuthenticationPrincipal MemberDetails memberDetails, @PathVariable int cid) {
         if (memberDetails != null) {
-            String id=memberDetails.getId();
-            Member member=mypageService.getMemberById(id);
+            Member member = mypageService.getMemberById(memberDetails.getId());
             mypageService.deleteWant(cid,member);
 
         } else {
