@@ -1,9 +1,12 @@
 package Iniro.kTrip.domain;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Entity(name = "Review")
+@Entity(name = "review")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -12,10 +15,10 @@ public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int rid;
+    private int review_id;
 
     @ManyToOne
-    @JoinColumn(name="mid")
+    @JoinColumn(name="member_id")
     private Member member;
 
     @Column
@@ -23,15 +26,4 @@ public class Review {
 
     @Column(length = 255)
     private String content;
-
-    @Column
-    private int cid;
-
-    @Column
-    private int ctypeid;
-
-    @Column(length = 255)
-    private String writedate;
-
 }
-

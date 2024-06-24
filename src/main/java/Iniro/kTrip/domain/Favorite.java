@@ -14,20 +14,12 @@ import lombok.NoArgsConstructor;
 public class Favorite {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int fid;
+    private int fav_id;
 
     @ManyToOne
-    @JoinColumn(name="mid")
+    @JoinColumn(name="member_id")
     private Member member;
 
     @Column(length = 20)
     private String region;
-
-    @Column
-    private int cid;
-
-    @Column
-    private int ctypeid;
-
 }
-
