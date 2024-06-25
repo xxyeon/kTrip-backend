@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -27,11 +28,11 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     private final JWTUtil jwtUtil;
     private final MemberRepository memberRepository;
 
-    public LoginFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil, MemberRepository memberRepository) {
+    public LoginFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil, MemberRepository memberRepository, String filterProcessesUrl) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
         this.memberRepository = memberRepository;
-        //setFilterProcessesUrl("/signIn"); // 로그인 경로를 signUp으로 변경
+        setFilterProcessesUrl(filterProcessesUrl); // 설정된 경로로 필터 매핑
     }
 
     @Override
@@ -47,6 +48,12 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void setFilterProcessesUrl(String filterProcessesUrl) {
+        super.setFilterProcessesUrl(filterProcessesUrl);
+        setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher(filterProcessesUrl));
     }
 
     private Cookie createCookie(String key, String value) {

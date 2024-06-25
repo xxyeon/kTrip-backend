@@ -52,6 +52,7 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
@@ -61,6 +62,7 @@ public class SecurityConfig {
                         .requestMatchers("/reissue").permitAll()
                         .anyRequest().authenticated()
                 )
+
                 .formLogin(form -> form
                         .loginPage("/login")
                         .defaultSuccessUrl("/", true)
@@ -88,11 +90,9 @@ public class SecurityConfig {
         //                        // 로그인 성공 시 핸들러
         //                        .successHandler(OAuthSuccessHandler)
 
-
-        http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil, memberRepository), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil, memberRepository, "/signIn"), UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(new CustomLogoutFilter(jwtUtil, memberRepository), LogoutFilter.class);
         http.addFilterBefore(new JWTFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
-
 
         return http.build();
     }
