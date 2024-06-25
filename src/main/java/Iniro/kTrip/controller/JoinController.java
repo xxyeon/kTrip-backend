@@ -1,6 +1,6 @@
 package Iniro.kTrip.controller;
 
-
+/*
 import Iniro.kTrip.dto.JoinDto;
 import Iniro.kTrip.service.JoinService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,4 +29,4 @@ public class JoinController
     }
 
 
-}
+}*/

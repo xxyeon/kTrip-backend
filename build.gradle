@@ -31,19 +31,30 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5'
+	//implementation 'org.springframework.security.config.annotation.web.builders.HttpSecurity'
+	// JWT 관련
 	compileOnly 'org.projectlombok:lombok'
 	testImplementation 'org.mockito:mockito-core:2.23.4'
 	implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
 	implementation 'io.jsonwebtoken:jjwt-impl:0.12.3'
 	implementation 'io.jsonwebtoken:jjwt-jackson:0.12.3'
+	// JWT - ModelMapper
+	implementation 'org.modelmapper:modelmapper:2.4.2'
+
+	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 	annotationProcessor 'org.projectlombok:lombok'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.mariadb.jdbc:mariadb-java-client:3.3.3'
 	implementation 'org.springframework.boot:spring-boot-starter-test'
 
-}
+	//mysql
+//	runtimeOnly 'com.mysql:mysql-connector-j'
+	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
 
+
+}
+/*
 def frontendDir = "$projectDir/src/main/front"
 
 sourceSets {
@@ -88,3 +99,4 @@ task copyReactBuildFiles(type: Copy) {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+*/
