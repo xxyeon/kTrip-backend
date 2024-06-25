@@ -3,35 +3,21 @@ package Iniro.kTrip.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Entity(name = "Review")
+@Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Review {
-
+public class Want {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int rid;
+    private int cid;
 
     @ManyToOne
     @JoinColumn(name="mid")
     private Member member;
 
     @Column
-    private int point;
-
-    @Column(length = 255)
-    private String content;
-
-    @Column
-    private int cid;
-
-    @Column
     private int ctypeid;
-
-    @Column(length = 255)
-    private String writedate;
-
 }
-
