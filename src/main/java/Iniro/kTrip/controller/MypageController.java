@@ -31,13 +31,13 @@ public class MypageController
     }
 
     @PostMapping("/mypage/password")
-    public String password(PasswordDto passwordDto)
+    public String password(@RequestBody PasswordDto passwordDto)
     {
         mypageService.changePassword(passwordDto);
         return "/mypage";
     }
     @PostMapping("/mypage/nickname")
-    public String nickname(NicknameDto nicknameDto)
+    public String nickname(@RequestBody NicknameDto nicknameDto)
     {
         mypageService.changeNickname(nicknameDto);
         return "/mypage";
