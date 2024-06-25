@@ -12,23 +12,20 @@ public class TripApi {
 
     @Getter
     public enum TripEndpoint {
-        AREA_CODE1("/areaCode1", AreaService::buildAreaInfo),
-        AREA_BASED_LIST1("/areaBasedList1", TripService::buildTripInfo);
+        AREA_CODE1("/areaCode1"),
+        AREA_BASED_LIST1("/areaBasedList1"),
+        DETAIL_COMMON1("/detailCommon1"),
+        DETAIL_INTRO1("/detailIntro1"),
+        DETAIL_INFO1("/detailInfo1");
 
         private final String endpoint;
-        private final Function<JSONObject, Object> mapperFunction;
 
-        TripEndpoint(String endpoint, Function<JSONObject, Object> mapperFunction) {
+        TripEndpoint(String endpoint) {
             this.endpoint = endpoint;
-            this.mapperFunction = mapperFunction;
         }
 
         public String getEndPoint() {
             return endpoint;
-        }
-
-        public Function<JSONObject, Object> getMapperFunction() {
-            return mapperFunction;
         }
     }
 
@@ -51,13 +48,13 @@ public class TripApi {
         CAT3("cat3="),
         MODIFIED_TIME("modifiedtime="),
         KEYWORD("keyword="),
-        DEFAULT_YN("defaultYN="),
-        FIRST_IMAGE_YN("firstImageYN="),
-        AREA_CODE_YN("areacodeYN="),
-        CAT_CODE_YN("catcodeYN="),
-        ADDR_INFO_YN("addrinfoYN="),
-        MAP_INFO_YN("mapinfoYN="),
-        OVERVIEW_YN("overviewYN="),
+        DEFAULT_YN("defaultYN=Y"),
+        FIRST_IMAGE_YN("firstImageYN=Y"),
+        AREA_CODE_YN("areacodeYN=Y"),
+        CAT_CODE_YN("catcodeYN=Y"),
+        ADDR_INFO_YN("addrinfoYN=Y"),
+        MAP_INFO_YN("mapinfoYN=Y"),
+        OVERVIEW_YN("overviewYN=Y"),
         CONTENT_ID("contentId=");
 
         private final String param;
