@@ -30,10 +30,4 @@ public class AreaService {
         List<ResAreaInfo> resAreaInfos = (List<ResAreaInfo>) fetch(reqUrl);
         return resAreaInfos;
     }
-    public static ResAreaInfo buildAreaInfo(JSONObject item) {
-        return ResAreaInfo.builder()
-                .code((String) item.get("code"))
-                .name((String) item.get("name"))
-                .build();
-    }
 }
