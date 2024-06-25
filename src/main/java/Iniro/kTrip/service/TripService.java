@@ -1,8 +1,10 @@
 package Iniro.kTrip.service;
 
+import Iniro.kTrip.dto.ResDetailIntro;
 import Iniro.kTrip.dto.ResJson;
 import Iniro.kTrip.dto.ResStayInfo;
 import Iniro.kTrip.dto.ResTripInfo;
+import Iniro.kTrip.util.URLBuilder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -41,73 +43,54 @@ public class TripService {
 
         return fetch(reqUrl);
     }
+    public static Object getDetailIntro(String contentId, String contentTypeId) throws URISyntaxException {
+        String reqUrl = null;
+        String content_type_id = contentTypeId != null ? contentTypeId : "";
+        String content_id = contentTypeId != null ? contentId : "";
+        try {
+            reqUrl = DETAIL_INTRO1.getEndPoint() +
+                    "?" + CONTENT_TYPE_ID.getParam() + content_type_id +
+                    "&" + CONTENT_ID.getParam() + content_id;
 
-
-    public static ResTripInfo buildTripInfo(JSONObject item) {
-        ResTripInfo resTripInfo = ResTripInfo.builder()
-                .title((String) item.get("title"))
-                .addr1((String) item.get("addr1"))
-                .addr2((String) item.get("addr2"))
-                .areacode(Integer.parseInt((String) item.get("areacode")))
-                .firstimage((String) item.get("firstimage"))
-                .firstimage2((String) item.get("firstimage2"))
-                .sigungucode(Integer.parseInt((String) item.get("sigungucode")))
-                .mapx((String) item.get("mapx"))
-                .mapy((String) item.get("mapy"))
-                .booktour((String) item.get("booktour"))
-                .tel((String) item.get("tel"))
-//                .homepage((String) item.get("homepage"))
-//                .overview((String) item.get("overview"))
-                .build();
-        setResJson(item, resTripInfo);
-        return resTripInfo;
+        } catch (Exception e) {
+            log.error("{}", e);
+        }
+        return fetch(reqUrl);
     }
+    public static Object getDetailInfo(String contentId, String contentTypeId) throws URISyntaxException {
+        String reqUrl = null;
+        String content_type_id = contentTypeId != null ? contentTypeId : "";
+        String content_id = contentTypeId != null ? contentId : "";
+        try {
+            reqUrl = DETAIL_INFO1.getEndPoint() +
+                    "?" + CONTENT_TYPE_ID.getParam() + content_type_id +
+                    "&" + CONTENT_ID.getParam() + content_id;
 
-    private ResStayInfo buildStayInfo(JSONObject item) {
-
-        ResStayInfo resStayInfo = ResStayInfo.builder()
-                .roomBaseCount((String) item.get("roombasecount"))
-                .roomCode((String) item.get("roomcode"))
-                .roomTitle((String) item.get("roomtitle"))
-                .roomSize((String) item.get("roomsize"))
-                .roomCount((String) item.get("roomcount"))
-                .roomBaseCount((String) item.get("roombasecount"))
-                .roomMaxCount((String) item.get("roommaxcount"))
-                .roomOffSeasonMinFee1((String) item.get("roomoffseasonminfee1"))
-                .roomOffSeasonMinFee2((String) item.get("roomoffseasonminfee2"))
-                .roomPeakSeasonMinfee1((String) item.get("roompeakseasonminfee1"))
-                .roomPeakSeasonMinfee2((String) item.get("roompeakseasonminfee2"))
-                .roomIntro((String) item.get("roomintro"))
-                .roomBath((String) item.get("roombath"))
-                .roomHomeTheater((String) item.get("roomhometheater"))
-                .roomAirCondition((String) item.get("roomaircondition"))
-                .roomTv((String) item.get("roomtv"))
-                .roomPc((String) item.get("roompc"))
-                .roomCable((String) item.get("roomcable"))
-                .roomInternet((String) item.get("roominternet"))
-                .roomRefrigerator((String) item.get("roomrefrigerator"))
-                .roomToiletries((String) item.get("roomtoiletries"))
-                .roomSofa((String) item.get("roomsofa"))
-                .roomCook((String) item.get("roomcook"))
-                .roomTable((String) item.get("roomtable"))
-                .roomHairdryer((String) item.get("roomhairdryer"))
-                .roomSize2((String) item.get("roomsize2"))
-                .roomImg1(new ResStayInfo.RoomImg((String) item.get("roomimg1"), (String) item.get("roomimg1alt")))
-                .roomImg2(new ResStayInfo.RoomImg((String) item.get("roomimg2"), (String) item.get("roomimg2alt")))
-                .roomImg3(new ResStayInfo.RoomImg((String) item.get("roomimg3"), (String) item.get("roomimg3alt")))
-                .roomImg4(new ResStayInfo.RoomImg((String) item.get("roomimg4"), (String) item.get("roomimg4alt")))
-                .roomImg5(new ResStayInfo.RoomImg((String) item.get("roomimg5"), (String) item.get("roomimg5alt")))
-                .roomSize2((String) item.get("roomsize2")).build();
-        setResJson(item, resStayInfo);
-
-        return resStayInfo;
-
+        } catch (Exception e) {
+            log.error("{}", e);
+        }
+        return fetch(reqUrl);
     }
-
-    private static void setResJson(JSONObject item, ResJson resJson) {
-        resJson.setContentId((String) item.get("contentid"));
-        resJson.setContentTypeId((String) item.get("contenttypeid"));
+    public static Object getDetailCommon(String contentId, String contentTypeId) throws URISyntaxException {
+        String reqUrl = null;
+        String content_type_id = contentTypeId != null ? contentTypeId : "";
+        String content_id = contentTypeId != null ? contentId : "";
+        String page_no =  "1";
+        try {
+            reqUrl = DETAIL_COMMON1.getEndPoint() +
+                    "?" + CONTENT_TYPE_ID.getParam() + content_type_id +
+                    "&" + CONTENT_ID.getParam() + content_id +
+                    "&" + PAGE_NO.getParam() + page_no +
+                    "&" + DEFAULT_YN.getParam() +
+                    "&" + FIRST_IMAGE_YN.getParam() +
+                    "&" + AREA_CODE_YN.getParam() +
+                    "&" + CAT_CODE_YN.getParam() +
+                    "&" + ADDR_INFO_YN.getParam() +
+                    "&" + MAP_INFO_YN.getParam() +
+                    "&" + OVERVIEW_YN.getParam();
+        } catch (Exception e) {
+            log.error("{}", e);
+        }
+        return fetch(reqUrl);
     }
-
-
 }

@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 
@@ -64,20 +65,35 @@ public class URLBuilder {
 
         JSONObject jsonResponse = (JSONObject) jsonObject.get("response");
         JSONObject jsonBody = (JSONObject) jsonResponse.get("body");
-        JSONObject jsonItems = (JSONObject) jsonBody.get("items");
-        JSONArray jsonItemList = (JSONArray) jsonItems.get("item");
-        List<Object> result = new ArrayList<>();
-
-
-        for (TripApi.TripEndpoint tripEndpoint : TripApi.TripEndpoint.values()) {
-            if (url.contains(tripEndpoint.getEndPoint())) {
-                Function mapperFunction = tripEndpoint.getMapperFunction();
-                for (Object o : jsonItemList) {
-                    JSONObject item = (JSONObject) o;
-                    result.add(mapperFunction.apply(item));
+        JSONArray jsonItemList = null;
+        if (jsonBody.containsKey("items")) {
+            Object itemsObject = jsonBody.get("items");
+            if (itemsObject instanceof JSONObject) {
+                JSONObject jsonItems = (JSONObject) itemsObject;
+                if (jsonItems.containsKey("item") && jsonItems.get("item") instanceof JSONArray) {
+                    jsonItemList = (JSONArray) jsonItems.get("item");
                 }
             }
         }
-        return result;
+        List<Object> result = new ArrayList<>();
+        if (jsonItemList != null) {
+            for (TripApi.TripEndpoint tripEndpoint : TripApi.TripEndpoint.values()) {
+                if (url.contains(tripEndpoint.getEndPoint())) {
+                    if(tripEndpoint.getEndPoint().equals("/areaBasedList1")){
+                        Long totalCount = (Long) jsonBody.get("totalCount");
+                        Long numOfRows = 12L;
+                        result.add(totalCount);
+                        result.add(numOfRows);
+                    }
+                    for (Object o : jsonItemList) {
+                        JSONObject item = (JSONObject) o;
+                        result.add(item);
+                    }
+                    break;
+                }
+            }
+        }
+
+        return result.isEmpty() ? Collections.emptyList() : result;
     }
 }
