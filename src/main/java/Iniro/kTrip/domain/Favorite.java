@@ -17,10 +17,9 @@ public class Favorite {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int fid;
 
-    @ManyToOne
-    @JoinColumn(name="member_id")
-    private Member member;
+    @JoinColumn(name="mid")
+    private int mid;
 
     @Column(length = 20)
-    private String region;
+    private String cid;
 }
