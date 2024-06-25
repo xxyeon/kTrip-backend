@@ -26,8 +26,6 @@ public class Member {
     private String nickname;
     @Column(length = 20)
     private String name;
-    @Column(length = 255)
-    private String password;
 
     @Column(name = "access_token", length=255)
     private String accessToken;

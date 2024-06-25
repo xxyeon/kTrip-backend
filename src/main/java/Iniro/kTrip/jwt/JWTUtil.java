@@ -1,7 +1,6 @@
 package Iniro.kTrip.jwt;
 
 import Iniro.kTrip.domain.Member;
-import Iniro.kTrip.dto.MemberDto;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
