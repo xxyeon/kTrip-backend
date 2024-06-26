@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-
 @Entity(name="Favorite")
 @Getter
 @NoArgsConstructor
@@ -17,9 +16,14 @@ public class Favorite {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int fid;
 
+    @ManyToOne
     @JoinColumn(name="mid")
-    private int mid;
+    private Member member;
 
-    @Column(length = 20)
+    @Column
     private String cid;
+
+
+
 }
+

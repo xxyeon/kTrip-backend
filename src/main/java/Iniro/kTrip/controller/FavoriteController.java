@@ -1,13 +1,17 @@
 package Iniro.kTrip.controller;
 
+import Iniro.kTrip.domain.Favorite;
 import Iniro.kTrip.domain.Member;
 import Iniro.kTrip.dto.MemberDetails;
+import Iniro.kTrip.dto.ReviewDto;
 import Iniro.kTrip.repository.MemberRepository;
 import Iniro.kTrip.service.FavoriteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.*;
 @RestController
 @CrossOrigin(origins = "*") // CORS 에러 방지
 @RequestMapping("/favorite")
@@ -19,19 +23,30 @@ public class FavoriteController {
 
     @PostMapping("/toggle")
     public void toggleFavoriteSpot(
-                                @AuthenticationPrincipal MemberDetails memberDetails,
-                                @RequestParam(name = "cid", required = true) String cid,
-                                @RequestParam(name = "toggle", required = true) int toggle) throws IllegalAccessException {
+            @AuthenticationPrincipal MemberDetails memberDetails,
+            @RequestParam(name = "cid", required = true) String cid,
+            @RequestParam(name = "toggle", required = true) int toggle) throws IllegalAccessException {
         Member member=memberRepository.findById(memberDetails.getId());
         if(member!=null)
         {
             if(toggle == 0){
-                favoriteService.deleteFavoriteSpot(cid, member.getMid());
+                favoriteService.deleteFavoriteSpot(cid, member);
             }
             else if(toggle == 1){
-                favoriteService.addFavoriteSpot(cid, member.getMid());
+                favoriteService.addFavoriteSpot(cid, member);
             }
         }
 
+    }
+    @GetMapping("/load")
+    public ResponseEntity<?> loadFavoriteSpot(@AuthenticationPrincipal MemberDetails memberDetails)
+    {
+        Member member=memberRepository.findById(memberDetails.getId());
+        if(member!=null)
+        {
+            List<Favorite> favorites =favoriteService.favoriteByMid(member);
+            return ResponseEntity.ok(favorites);
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("사용자에게 접근 권한이 없습니다");
     }
 }
