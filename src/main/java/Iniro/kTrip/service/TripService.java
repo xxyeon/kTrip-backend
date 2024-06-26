@@ -15,6 +15,9 @@ import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.net.URISyntaxException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -88,6 +91,19 @@ public class TripService {
                     "&" + ADDR_INFO_YN.getParam() +
                     "&" + MAP_INFO_YN.getParam() +
                     "&" + OVERVIEW_YN.getParam();
+        } catch (Exception e) {
+            log.error("{}", e);
+        }
+        return fetch(reqUrl);
+    }
+    public Object getTripByKeyword(String keyword, String pageNo) throws URISyntaxException {
+        String reqUrl = null;
+        String keyWord = keyword != null ? keyword : "";
+        String page_no = pageNo != null ? pageNo : "1";
+        try {
+            reqUrl = SEARCH_KEYWORD1.getEndPoint() +
+                    "?" + KEYWORD.getParam() + keyWord +
+                    "&" + PAGE_NO.getParam() + page_no;
         } catch (Exception e) {
             log.error("{}", e);
         }
