@@ -2,6 +2,7 @@ package Iniro.kTrip.util;
 
 import Iniro.kTrip.openApi.TripApi;
 import Iniro.kTrip.service.AreaService;
+import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -21,6 +22,7 @@ import static Iniro.kTrip.openApi.TripApi.TripEndpoint.*;
 import static Iniro.kTrip.openApi.TripApi.TripQueryParam.*;
 
 @Component
+@Slf4j
 public class URLBuilder {
 
     @Autowired
@@ -75,6 +77,8 @@ public class URLBuilder {
                 }
             }
         }
+
+        log.info("jsonItemList: {}", jsonItemList);
         List<Object> result = new ArrayList<>();
         if (jsonItemList != null) {
             for (TripApi.TripEndpoint tripEndpoint : TripApi.TripEndpoint.values()) {

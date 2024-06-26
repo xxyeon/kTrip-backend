@@ -2,6 +2,7 @@ package Iniro.kTrip.controller;
 
 import Iniro.kTrip.service.TripService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,7 @@ import java.util.Map;
 @RequestMapping("/trip")
 @CrossOrigin("*")
 @RequiredArgsConstructor
+@Slf4j
 public class TripController {
 
     private final TripService tripService;
@@ -87,5 +89,52 @@ public class TripController {
         for (Map<String, Object> item : itemsList) {
             mergeDetails(result, item);
         }
+    }
+
+
+    /**
+     * 위치기반 여행지 추천
+     */
+    @GetMapping("/location")
+    public ResponseEntity<?> recommendByLocation(String mapX, String mapY, String radius, @RequestParam(name = "pageno", required = false) String pageNo) {
+        log.info("mapX: {} mapY: {}", mapX, mapY);
+        return ResponseEntity.ok().body(tripService.recommendByLocation(mapX, mapY, radius, pageNo));
+    }
+
+    @GetMapping("/stay")
+    public ResponseEntity<?> getStay(
+            @RequestParam(required = false) String areaCode,
+            @RequestParam(required = false) String sigunguCode
+    ) {
+        return ResponseEntity.ok().body(tripService.getStay(areaCode, sigunguCode));
+    }
+
+    @GetMapping("/detail_common")
+    public ResponseEntity<?> getTripCommon(String contentId) { //servicekey error
+        return ResponseEntity.ok().body(tripService.getTripInfo(contentId));
+    }
+
+
+    @GetMapping("/stay/info")
+    ResponseEntity<?> getStayInfo(String contentId, String contentTypeId) {
+        return ResponseEntity.ok().body(tripService.getStayInfo(contentId, contentTypeId));
+    }
+
+
+
+    /**
+     * 지역별 음식점 추천
+     */
+    @GetMapping("/food")
+    public ResponseEntity<?> recommendFood(String areaCode, String sigunguCode, @RequestParam(required = false) String cat3) throws URISyntaxException {
+        return ResponseEntity.ok().body(tripService.recommendFood(areaCode, sigunguCode, cat3));
+    }
+
+    /**
+     * 지역별 쇼핑몰 추천
+     */
+    @GetMapping("/shopping")
+    public ResponseEntity<?> recommendShopping(String areaCode, String sigunguCode, @RequestParam(required = false) String cat3) throws URISyntaxException {
+        return ResponseEntity.ok().body(tripService.recommendShopping(areaCode, sigunguCode, cat3));
     }
 }

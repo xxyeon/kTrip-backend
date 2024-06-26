@@ -16,7 +16,13 @@ public class TripApi {
         AREA_BASED_LIST1("/areaBasedList1"),
         DETAIL_COMMON1("/detailCommon1"),
         DETAIL_INTRO1("/detailIntro1"),
+        SEARCH_KEYWORD1("/searchKeyword1"),
+        LOCATION_BASED_LIST1("/locationBasedList1"),
+        SEARCH_STAY1("/searchStay1"),
+        DETAIL_INTRO("/detailIntro1"),
+        DETAIL_INFO("/detailInfo1"),
         DETAIL_INFO1("/detailInfo1");
+
 
         private final String endpoint;
 
@@ -55,6 +61,10 @@ public class TripApi {
         ADDR_INFO_YN("addrinfoYN=Y"),
         MAP_INFO_YN("mapinfoYN=Y"),
         OVERVIEW_YN("overviewYN=Y"),
+        //위치 정보 조회
+        MAP_X("mapX="),
+        MAP_Y("mapY="),
+        RADIUS("radius="),
         CONTENT_ID("contentId=");
 
         private final String param;
