@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -57,12 +59,22 @@ public class TripController {
         // JSON 형식으로 배열로 반환
         return ResponseEntity.ok().body(resultList);
     }
+    @GetMapping("/search")
+    public ResponseEntity<?> getTrip(
+            @RequestParam(name = "keyword", required = false) String keyword,
+            @RequestParam(name = "pageno", required = false) String pageNo) throws URISyntaxException {
+
+        //입력받은 값을 암호화하여 전달
+        String encodedKeyword = keyword != null ? URLEncoder.encode(keyword, StandardCharsets.UTF_8) : null;
+
+        return ResponseEntity.ok().body(tripService.getTripByKeyword(encodedKeyword, pageNo));
+    }
 
     // key-value 쌍에서 value가 빈 문자열이거나, 이미 존재하는 key는 데이터에 들어가지 않는 로직
     private void mergeDetails(Map<String, Object> result, Map<String, Object> items) {
         for (Map.Entry<String, Object> entry : items.entrySet()) {
             if (entry.getValue() instanceof String && ((String) entry.getValue()).isEmpty()) {
-                continue;
+                result.put(entry.getKey(), "정보 없음");
             }
             if (!result.containsKey(entry.getKey())) {
                 result.put(entry.getKey(), entry.getValue());
