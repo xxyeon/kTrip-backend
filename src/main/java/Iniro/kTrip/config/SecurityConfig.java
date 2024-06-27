@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -52,29 +51,35 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/", "/oauth2/**", "/signUp", "/signIn").permitAll()
-                        .requestMatchers("/reissue").permitAll()
+                        // Public URLs that anyone can access without authentication
+                        .requestMatchers("/", "/oauth2/**", "/signUp", "/signIn", "/trip", "/trip/*", "/trip/**", "/reviews").permitAll()
+
+                        // Add other URLs that should be publicly accessible here
+                        .requestMatchers("/public/**").permitAll() // Example: All URLs under /public/** are accessible without authentication
+
+
+                        // Any other request requires authentication
                         .anyRequest().authenticated()
                 )
 
-//                .formLogin(form -> form
-//                        .loginPage("/login/oauth2/code/naver")
-//                        .defaultSuccessUrl("/", true)
-//                        .permitAll()
-//                )
+                // Disable form login
+                // .formLogin(form -> form
+                //     .loginPage("/login/oauth2/code/naver")
+                //     .defaultSuccessUrl("/", true)
+                //     .permitAll()
+                // )
 
                 .logout(logout -> logout
                         .permitAll()
                 )
 
                 .oauth2Login(oauth2 -> oauth2
-                        //.loginPage("/login-oauth2")
+                        // .loginPage("/login-oauth2")
                         .redirectionEndpoint(endpoint -> endpoint.baseUri("/login/oauth2/code/naver"))
                         .userInfoEndpoint(endpoint -> endpoint.userService(oAuth2UserService))
                         .successHandler(oAuth2SuccessHandler)
@@ -85,13 +90,7 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 );
 
-        // oauth2 설정
-        //                .oauth2Login(oauth -> // OAuth2 로그인 기능에 대한 여러 설정의 진입점
-        //                // OAuth2 로그인 성공 이후 사용자 정보를 가져올 때의 설정을 담당
-        //                    oauth.userInfoEndpoint(c -> c.userService(oAuthService))
-        //                        // 로그인 성공 시 핸들러
-        //                        .successHandler(OAuthSuccessHandler)
-
+        // Add custom filters
         http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil, memberRepository, "/signIn"), UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(new CustomLogoutFilter(jwtUtil, memberRepository), LogoutFilter.class);
         http.addFilterBefore(new JWTFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
