@@ -5,6 +5,7 @@ import Iniro.kTrip.domain.Member;
 import Iniro.kTrip.repository.MemberRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -41,7 +42,7 @@ public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
             userId = "naver_" + responseMap.get("id").substring(0, 14);
             email = responseMap.get("email");
             name = responseMap.get("name");
-            member = new Iniro.kTrip.domain.Member(userId, "nickname", email, "naver");
+            member = new Member(userId, "nickname", email, "naver");
         }
 
 

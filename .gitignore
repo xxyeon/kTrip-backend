@@ -37,3 +37,5 @@ out/
 .vscode/
 ### Open API ###
 .env
+build.gradle
+src/main/resources/application.yml

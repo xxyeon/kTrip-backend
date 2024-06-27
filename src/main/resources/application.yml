@@ -1,14 +1,14 @@
 #시큐리티 관련 설정입니다. pull하고 .yml은 .gitignore 해주세요
 spring:
   datasource:
-    url: jdbc:mariadb://localhost:3305/kTrip
+    url: jdbc:mariadb://localhost:3306/kTrip
     driver-class-name: org.mariadb.jdbc.Driver
     username: root
     password: 1234
   jpa:
     generate-ddl: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
 
   security:
     oauth2:
@@ -19,7 +19,7 @@ spring:
             client-secret: WFRCqDBZ3M
             authorization-grant-type: authorization_code
             #authorization-grant-type: client_credentials
-            redirect-uri: http://localhost:8080/login/oauth2/code/naver
+            redirect-uri: http://localhost:8080/login
             scope:
               - email
               - name
@@ -43,4 +43,4 @@ spring:
 
 logging:
   level:
-    org.hibernate.sql: DEBUG
+    org.hibernate.type.descriptor.sql: trace

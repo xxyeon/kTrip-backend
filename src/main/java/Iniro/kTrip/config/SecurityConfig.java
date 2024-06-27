@@ -58,21 +58,23 @@ public class SecurityConfig {
 
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/", "/login", "/oauth2/**", "/signUp", "/signIn").permitAll()
+                        .requestMatchers("/", "/oauth2/**", "/signUp", "/signIn").permitAll()
                         .requestMatchers("/reissue").permitAll()
                         .anyRequest().authenticated()
                 )
 
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/", true)
-                        .permitAll()
-                )
+//                .formLogin(form -> form
+//                        .loginPage("/login/oauth2/code/naver")
+//                        .defaultSuccessUrl("/", true)
+//                        .permitAll()
+//                )
 
                 .logout(logout -> logout
                         .permitAll()
                 )
+
                 .oauth2Login(oauth2 -> oauth2
+                        //.loginPage("/login-oauth2")
                         .redirectionEndpoint(endpoint -> endpoint.baseUri("/login/oauth2/code/naver"))
                         .userInfoEndpoint(endpoint -> endpoint.userService(oAuth2UserService))
                         .successHandler(oAuth2SuccessHandler)
