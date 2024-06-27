@@ -48,9 +48,10 @@ public class TripController {
 
             List<Map<String, Object>> details = (List<Map<String, Object>>) tripService.getDetailIntro(contentid, contenttypeid);
             mergeDetailsList(result, details);
-
-            details = (List<Map<String, Object>>) tripService.getDetailInfo(contentid, contenttypeid);
-            mergeDetailsList(result, details);
+            if (!contenttypeid.equals("25")){
+                details = (List<Map<String, Object>>) tripService.getDetailInfo(contentid, contenttypeid);
+                mergeDetailsList(result, details);
+            }
 
             resultList.add(result);
 
@@ -60,6 +61,13 @@ public class TripController {
 
         // JSON 형식으로 배열로 반환
         return ResponseEntity.ok().body(resultList);
+    }
+    @GetMapping("/course")
+    public ResponseEntity<?> getCourse (
+            @RequestParam(name = "contentid", required = false) String contentid,
+            @RequestParam(name = "contenttypeid", required = false) String contenttypeid) throws URISyntaxException{
+
+        return ResponseEntity.ok().body(tripService.getDetailInfo(contentid, contenttypeid));
     }
     @GetMapping("/search")
     public ResponseEntity<?> getTrip(
