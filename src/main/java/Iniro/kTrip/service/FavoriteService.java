@@ -7,33 +7,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class FavoriteService {
 
     @Autowired
     private FavoriteRepository favoriteRepository;
-    public Favorite craeteFavorite(String cid, int mid){
+    public Favorite craeteFavorite(String cid, Member member){
         return Favorite.builder()
-                .mid(mid)
+                .member(member)
                 .cid(cid)
                 .build();
     }
     @Transactional
-    public void addFavoriteSpot(String cid, int mid) throws IllegalAccessException {
-          if(favoriteRepository.existsByMidAndCid(mid, cid)){
+    public void addFavoriteSpot(String cid,Member member) throws IllegalAccessException {
+          if(favoriteRepository.existsByMemberAndCid(member, cid)){
              throw new IllegalAccessException("이미 즐겨찾기되어있는 여행지입니다.");
           }
           else{
-              favoriteRepository.save(craeteFavorite(cid, mid));
+              favoriteRepository.save(craeteFavorite(cid,member));
           }
     }
+
     @Transactional
-    public void deleteFavoriteSpot(String cid, int mid) throws IllegalAccessException{
-        if(!favoriteRepository.existsByMidAndCid(mid, cid)){
+    public void deleteFavoriteSpot(String cid, Member member) throws IllegalAccessException{
+        if(!favoriteRepository.existsByMemberAndCid(member, cid)){
             throw new IllegalAccessException("즐겨찾기 정보가 없습니다.");
         }
         else{
-            favoriteRepository.deleteFavoriteByMidAndCid(mid, cid);
+            favoriteRepository.deleteFavoriteByMemberAndCid(member, cid);
         }
+    }
+    @Transactional
+    public List<Favorite> favoriteByMid(Member member) {
+        return favoriteRepository.findCidByMember(member);
     }
 }

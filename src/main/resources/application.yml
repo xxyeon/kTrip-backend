@@ -1,14 +1,14 @@
 #시큐리티 관련 설정입니다. pull하고 .yml은 .gitignore 해주세요
 spring:
   datasource:
-    url: jdbc:mariadb://localhost:3306/kTrip
+    url: jdbc:mariadb://localhost:3305/kTrip
     driver-class-name: org.mariadb.jdbc.Driver
     username: root
     password: 1234
   jpa:
-      generate-ddl: true
-      hibernate:
-        ddl-auto: update
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
 
   security:
     oauth2:

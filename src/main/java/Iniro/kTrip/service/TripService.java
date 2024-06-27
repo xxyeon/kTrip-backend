@@ -1,16 +1,15 @@
 package Iniro.kTrip.service;
 
-import Iniro.kTrip.util.URLBuilder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.minidev.json.parser.JSONParser;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.json.simple.JSONArray;
+import org.json.JSONArray;
 import org.json.simple.JSONObject;
 
-import org.json.simple.parser.JSONParser;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -50,6 +49,8 @@ public class TripService {
 
         return fetch(reqUrl);
     }
+
+
     public static Object getDetailIntro(String contentId, String contentTypeId) throws URISyntaxException {
         String reqUrl = null;
         String content_type_id = contentTypeId != null ? contentTypeId : "";

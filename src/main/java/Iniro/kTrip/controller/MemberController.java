@@ -24,13 +24,6 @@ public class MemberController {
         else return "/home/login";
     }
 
-    @RequestMapping("/signIn")
-    @GetMapping
-    public String login(@RequestBody Member request){
-        String token = this.authService.login(request);
-        if (token != null)
-            return "/home";
-        else return "/home/login";
-    }
+
 
 }

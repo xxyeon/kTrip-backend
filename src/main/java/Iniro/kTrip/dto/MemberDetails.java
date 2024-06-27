@@ -22,7 +22,7 @@ public class MemberDetails implements UserDetails {
             @Override
             public String getAuthority() {
 
-                return member.getLoginType();
+                return member.getRole();
             }
         });
         return collection;
@@ -40,6 +40,18 @@ public class MemberDetails implements UserDetails {
     public String getId()
     {
         return member.getId();
+    }
+    public String getName()
+    {
+        return member.getName();
+    }
+    public String getNickname()
+    {
+        return member.getNickname();
+    }
+    public String getEmail()
+    {
+        return member.getEmail();
     }
 
     @Override

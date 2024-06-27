@@ -29,6 +29,7 @@ public class AuthService {
     public boolean signUp(Member member){
         Member isExist = memberRepository.findById(member.getId());
         if (Objects.isNull(isExist)){
+            member.setPassword(encoder.encode(member.getPassword()));
             memberRepository.save(member);
             return true;
         }

@@ -6,17 +6,20 @@ import Iniro.kTrip.domain.Member;
 import Iniro.kTrip.jwt.JWTUtil;
 import Iniro.kTrip.repository.MemberRepository;
 import io.jsonwebtoken.ExpiredJwtException;
+import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 
 @RestController
+@CrossOrigin(origins = "*") // CORS 에러 방지
 public class ReissueController
 {
     private final JWTUtil jwtUtil;
@@ -85,13 +88,14 @@ public class ReissueController
 
         String id = jwtUtil.getId(refresh);
         String role = jwtUtil.getRole(refresh);
-
+        String email= jwtUtil.getEmail(refresh);
+        String nickname=jwtUtil.getNickname(refresh);
+        String name= jwtUtil.getName(refresh);
         //make new JWT
-        String newAccess = jwtUtil.createJwt("access", id, role, 600000L);
-        String newRefresh = jwtUtil.createJwt("refresh", id, role, 86400000L);
+        String newAccess = jwtUtil.createJwt("access", id, role,email,nickname,name, 600000L);
+        String newRefresh = jwtUtil.createJwt("refresh", id, role,email,nickname,name, 86400000L);
 
         //Refresh 토큰 저장 DB에 기존의 Refresh 토큰 삭제 후 새 Refresh 토큰 저장
-        memberRepository.deleteByRefreshToken(refresh);
         addRefreshEntity(id, newRefresh, 86400000L);
 
         //response
@@ -103,13 +107,17 @@ public class ReissueController
     private void addRefreshEntity(String id, String refresh, Long expiredMs) {
 
         Date date = new Date(System.currentTimeMillis() + expiredMs);
+        System.out.println(id);
+        Member member = memberRepository.findById(id);
 
-        Member refreshMember =new Member();
-        refreshMember.setId(id);
-        refreshMember.setRefreshToken(refresh);
-        refreshMember.setExpiration(date.toString());
+        if(member!=null)
+        {
+            System.out.println(member.getName());
+            member.setRefreshToken(refresh);
+            member.setExpiration(date.toString());
+            memberRepository.save(member);
+        }
 
-        memberRepository.save(refreshMember);
     }
 
 

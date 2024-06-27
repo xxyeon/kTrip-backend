@@ -16,7 +16,7 @@ import lombok.*;
 public class ReviewData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int mid = 3;
+    private int mid = 32;
     private int ctypeid = 1;
     private int cid = 3;
     private int point;

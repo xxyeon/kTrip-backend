@@ -33,6 +33,7 @@ public class TripApi {
         public String getEndPoint() {
             return endpoint;
         }
+
     }
 
     @Getter

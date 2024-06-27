@@ -15,6 +15,7 @@ public interface ReviewRepository extends JpaRepository<Review,Integer>
 
     List<Review> findByMember(Member member);
     void delete(Review review);
+    List<Review> findByCtypeidAndCid(int ctypeid, int cid);
 
 
 }
