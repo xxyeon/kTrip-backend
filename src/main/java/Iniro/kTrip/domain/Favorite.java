@@ -23,7 +23,4 @@ public class Favorite {
     @Column
     private String cid;
 
-
-
 }
-
