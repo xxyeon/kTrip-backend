@@ -83,7 +83,7 @@ public class URLBuilder {
         if (jsonItemList != null) {
             for (TripApi.TripEndpoint tripEndpoint : TripApi.TripEndpoint.values()) {
                 if (url.contains(tripEndpoint.getEndPoint())) {
-                    if(tripEndpoint.getEndPoint().equals("/areaBasedList1")){
+                    if(tripEndpoint.getEndPoint().equals("/areaBasedList1") || tripEndpoint.getEndPoint().equals("/searchKeyword1")){ // paging이 필요한 엔드포인트만.
                         Long totalCount = (Long) jsonBody.get("totalCount");
                         Long numOfRows = 12L;
                         result.add(totalCount);
