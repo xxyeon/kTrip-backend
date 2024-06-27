@@ -20,14 +20,10 @@ public class Favorite {
     @JoinColumn(name="mid")
     private Member member;
 
-    @Column(length = 20)
-    private String region;
-
     @Column
-    private int cid;
+    private String cid;
 
-    @Column
-    private int ctypeid;
+
 
 }
 

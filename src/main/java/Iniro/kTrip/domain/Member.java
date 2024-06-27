@@ -1,6 +1,7 @@
 package Iniro.kTrip.domain;
 
-import Iniro.kTrip.dto.MemberDto;
+
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,7 +14,7 @@ import lombok.*;
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int member_id;
+    private int mid;
 
     @Column(length = 20)
     private String id;
@@ -29,8 +30,10 @@ public class Member {
 
     @Column(name = "access_token", length=255)
     private String accessToken;
-    @Column(name="refresh_token", length=255)
-    private String refreshToken;
+
+    @Column(name = "refresh_token",length=255) // @Column 애너테이션을 통해 데이터베이스 컬럼 이름을 명시
+    private String refreshToken; // 자바 필드 이름은 camelCase를 사용하지만, 데이터베이스 컬럼 이름은 snake_case를 사용할 수 있습니다.
+
     @Column(length = 20)
     private String loginType;
 

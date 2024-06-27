@@ -5,8 +5,6 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-/src/main/resources/application.yml
-
 ### STS ###
 .apt_generated
 .classpath
@@ -27,7 +25,6 @@ bin/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
-#*.yml
 
 ### NetBeans ###
 /nbproject/private/
@@ -38,3 +35,5 @@ out/
 
 ### VS Code ###
 .vscode/
+### Open API ###
+.env

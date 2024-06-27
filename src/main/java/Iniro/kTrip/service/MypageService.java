@@ -2,6 +2,8 @@ package Iniro.kTrip.service;
 
 
 
+import Iniro.kTrip.dao.FavoriteRepository;
+import Iniro.kTrip.domain.Favorite;
 import Iniro.kTrip.domain.Member;
 import Iniro.kTrip.domain.Review;
 import Iniro.kTrip.domain.Want;
@@ -9,7 +11,6 @@ import Iniro.kTrip.dto.NicknameDto;
 import Iniro.kTrip.dto.PasswordDto;
 import Iniro.kTrip.repository.MemberRepository;
 import Iniro.kTrip.repository.ReviewRepository;
-import Iniro.kTrip.repository.WantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,16 +22,19 @@ import java.util.List;
 public class MypageService {
     private final ReviewRepository reviewRepository;
     private final MemberRepository memberRepository;
-    private final WantRepository wantRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final FavoriteRepository favoriteRepository;
 
     @Autowired
-    public MypageService(ReviewRepository reviewRepository, MemberRepository memberRepository, BCryptPasswordEncoder bCryptPasswordEncoder, WantRepository wantRepository) {
+    public MypageService(ReviewRepository reviewRepository, MemberRepository memberRepository, FavoriteRepository favoriteRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.reviewRepository = reviewRepository;
         this.memberRepository = memberRepository;
+        this.favoriteRepository = favoriteRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.wantRepository = wantRepository;
     }
+
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+
 
     public void changePassword(PasswordDto passwordDto) {
         String id = passwordDto.getId();
@@ -83,8 +87,8 @@ public class MypageService {
 
 
 
-    public List<Want> FindWant(Member member) {
-        return wantRepository.findByMember(member);
+    public List<Favorite> FindFavorite(Member member) {
+        return  favoriteRepository.findByMember(member);
     }
 
 
@@ -103,11 +107,11 @@ public class MypageService {
 
     }
 
-    public void deleteWant(int cid, Member member) {
-        List<Want> wants= wantRepository.findByMember(member);
-        for (int i = 0; i < wants.size(); i++) {
-            if (wants.get(i).getCid() == cid) {
-                wantRepository.delete(wants.get(i));
+    public void deleteFavorite(int fid, Member member) {
+        List<Favorite> favorites= favoriteRepository.findByMember(member);
+        for (int i = 0; i < favorites.size(); i++) {
+            if (favorites.get(i).getFid()==fid) {
+                favoriteRepository.delete(favorites.get(i));
                 return;
             }
         }
