@@ -1,6 +1,7 @@
 package Iniro.kTrip.controller;
 
 import Iniro.kTrip.service.TripService;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -58,9 +59,13 @@ public class TripController {
             return ResponseEntity.status(500).body("Error fetching data: " + e.getMessage());
         }
 
+        TripService.Result jsonResList = new TripService.Result<>();
+        jsonResList.setResult(resultList);
+
         // JSON 형식으로 배열로 반환
-        return ResponseEntity.ok().body(resultList);
+        return ResponseEntity.ok().body(jsonResList);
     }
+
     @GetMapping("/search")
     public ResponseEntity<?> getTrip(
             @RequestParam(name = "keyword", required = false) String keyword,

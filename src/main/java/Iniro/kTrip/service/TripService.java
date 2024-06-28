@@ -152,7 +152,7 @@ public class TripService {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    static class Result<T> {
+    public static class Result<T> {
         private T result;
     }
 

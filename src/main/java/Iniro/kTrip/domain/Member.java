@@ -18,7 +18,7 @@ public class Member {
 
     @Column(length = 20)
     private String id;
-    @Column(length = 20)
+    @Column(length = 255)
     private String password;
 
     @Column(length = 50, columnDefinition = "MEDIUMTEXT")
