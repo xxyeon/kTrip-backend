@@ -4,6 +4,7 @@ import Iniro.kTrip.domain.Favorite;
 import Iniro.kTrip.domain.Member;
 import Iniro.kTrip.dto.MemberDetails;
 import Iniro.kTrip.dto.ReviewDto;
+import Iniro.kTrip.jwt.JWTUtil;
 import Iniro.kTrip.repository.MemberRepository;
 import Iniro.kTrip.service.FavoriteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,15 @@ public class FavoriteController {
     private FavoriteService favoriteService;
     @Autowired
     private MemberRepository memberRepository;
-
+    @Autowired
+    private JWTUtil jwtUtil;
     @PostMapping("/toggle")
     public void toggleFavoriteSpot(
-            @AuthenticationPrincipal MemberDetails memberDetails,
+            @RequestHeader("Authorization") String token,
             @RequestParam(name = "cid", required = true) String cid,
             @RequestParam(name = "toggle", required = true) int toggle) throws IllegalAccessException {
-        Member member=memberRepository.findById(memberDetails.getId());
+        String memberId = jwtUtil.getId(token);
+        Member member=memberRepository.findById(memberId);
         if(member!=null)
         {
             if(toggle == 0){
@@ -39,9 +42,10 @@ public class FavoriteController {
 
     }
     @GetMapping("/load")
-    public ResponseEntity<?> loadFavoriteSpot(@AuthenticationPrincipal MemberDetails memberDetails)
+    public ResponseEntity<?> loadFavoriteSpot(@RequestHeader("Authorization") String token)
     {
-        Member member=memberRepository.findById(memberDetails.getId());
+        String memberId = jwtUtil.getId(token);
+        Member member=memberRepository.findById(memberId);
         if(member!=null)
         {
             List<Favorite> favorites =favoriteService.favoriteByMid(member);

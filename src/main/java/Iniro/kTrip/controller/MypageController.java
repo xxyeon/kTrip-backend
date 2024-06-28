@@ -40,13 +40,13 @@ public class MypageController {
 
 
 
-    @PostMapping("/password")
+    @PutMapping("/password")
     public ResponseEntity<?> changePassword(@RequestBody PasswordDto passwordDto) {
         mypageService.changePassword(passwordDto);
         return ResponseEntity.ok("/mypage");
     }
 
-    @PostMapping("/nickname")
+    @PutMapping("/nickname")
     public ResponseEntity<?> changeNickname(@RequestBody NicknameDto nicknameDto) {
         mypageService.changeNickname(nicknameDto);
         return ResponseEntity.ok("/mypage");
@@ -71,9 +71,10 @@ public class MypageController {
     }
 
     @GetMapping("/review")
-    public ResponseEntity<?> showReview(@AuthenticationPrincipal MemberDetails memberDetails) {
-        if (memberDetails != null) {
-            Member member = mypageService.getMemberById(memberDetails.getId());
+    public ResponseEntity<?> showReview(@RequestHeader("Authorization") String token) {
+        String memberId = jwtUtil.getId(token);
+        Member member = mypageService.getMemberById(memberId);
+        if (member != null) {
             List<Review> reviews = mypageService.FindReviews(member);
             return ResponseEntity.ok(reviews);
         } else {
@@ -83,9 +84,10 @@ public class MypageController {
 
     @DeleteMapping("/review/{rid}")
     @PreAuthorize("hasAuthority('DELETE_REVIEW')")
-    public ResponseEntity<?> deleteReview(@AuthenticationPrincipal MemberDetails memberDetails, @PathVariable int rid) {
-        if (memberDetails != null) {
-            Member member = mypageService.getMemberById(memberDetails.getId());
+    public ResponseEntity<?> deleteReview(@RequestHeader("Authorization") String token, @PathVariable int rid) {
+        String memberId = jwtUtil.getId(token);
+        Member member = mypageService.getMemberById(memberId);
+        if (member != null) {
             mypageService.deleteReview(rid, member);
             return ResponseEntity.ok().build();
         } else {
@@ -94,9 +96,10 @@ public class MypageController {
     }
 
     @GetMapping("/favorite")
-    public ResponseEntity<?> showFavorite(@AuthenticationPrincipal MemberDetails memberDetails) {
-        if (memberDetails != null) {
-            Member member = mypageService.getMemberById(memberDetails.getId());
+    public ResponseEntity<?> showFavorite(@RequestHeader("Authorization") String token) {
+        String memberId = jwtUtil.getId(token);
+        Member member = mypageService.getMemberById(memberId);
+        if (member != null) {
             List<Favorite> favorites = mypageService.FindFavorite(member);
             return ResponseEntity.ok(favorites);
         } else {
@@ -106,9 +109,10 @@ public class MypageController {
 
     @DeleteMapping("/favorite/{fid}")
     @PreAuthorize("hasAuthority('DELETE_FAVORITE')")
-    public ResponseEntity<?> deleteFavorite(@AuthenticationPrincipal MemberDetails memberDetails, @PathVariable int fid) {
-        if (memberDetails != null) {
-            Member member = mypageService.getMemberById(memberDetails.getId());
+    public ResponseEntity<?> deleteFavorite(@RequestHeader("Authorization") String token, @PathVariable int fid) {
+        String memberId = jwtUtil.getId(token);
+        Member member = mypageService.getMemberById(memberId);
+        if (member != null) {
             mypageService.deleteFavorite(fid, member);
             return ResponseEntity.ok().build();
         } else {
