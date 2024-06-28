@@ -75,12 +75,12 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         GrantedAuthority auth = iterator.next();
         String role = auth.getAuthority();
 
-        String access = jwtUtil.createJwt("access", id, role, email, nickname, name, 600000L);
+        String access = jwtUtil.createJwt("Authorization", id, role, email, nickname, name, 600000L);
         String refresh = jwtUtil.createJwt("refresh", id, role, email, nickname, name, 86400000L);
 
         addRefreshEntity(id, refresh, 86400000L);
 
-        response.setHeader("access", access);
+        response.setHeader("Authorization", "Bearer " + access);
         response.addCookie(createCookie("refresh", refresh));
         response.setStatus(HttpStatus.OK.value());
 

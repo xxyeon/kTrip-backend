@@ -64,8 +64,9 @@ public class JWTUtil
                 .signWith(secretKey)
                 .compact();
     }
-    public String createAccessToken(Member member, int expiredMs){
+    public String createAccessToken(String category,Member member, int expiredMs){
         return Jwts.builder()
+                .claim("category",category)
                 .claim("id", member.getId())
                 .claim("password", member.getPassword())
                 .issuedAt(new Date(System.currentTimeMillis()))
