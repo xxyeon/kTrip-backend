@@ -38,25 +38,25 @@ public class MypageController {
     }
 
 
-
-
     @PostMapping("/password")
-    public ResponseEntity<?> changePassword(@RequestBody PasswordDto passwordDto) {
+    public ResponseEntity<?> changePassword(@RequestBody PasswordDto passwordDto, @RequestHeader("Authorization") String token) {
+        String memberId = jwtUtil.getId(token);
+        passwordDto.setId(memberId);
         mypageService.changePassword(passwordDto);
         return ResponseEntity.ok("/mypage");
     }
 
     @PostMapping("/nickname")
-    public ResponseEntity<?> changeNickname(@RequestBody NicknameDto nicknameDto) {
+    public ResponseEntity<?> changeNickname(@RequestBody NicknameDto nicknameDto,  @RequestHeader("Authorization") String token) {
+        String memberId = jwtUtil.getId(token);
+        nicknameDto.setId(memberId);
         mypageService.changeNickname(nicknameDto);
         return ResponseEntity.ok("/mypage");
     }
 
     @GetMapping
     public ResponseEntity<?> showMypage(@RequestHeader("Authorization") String token) {
-
         String memberId = jwtUtil.getId(token); // 토큰에서 사용자 ID 추출
-
         Member member = mypageService.getMemberById(memberId);
 
         if (member != null) {
@@ -71,12 +71,15 @@ public class MypageController {
     }
 
     @GetMapping("/review")
-    public ResponseEntity<?> showReview(@AuthenticationPrincipal MemberDetails memberDetails) {
-        if (memberDetails != null) {
-            Member member = mypageService.getMemberById(memberDetails.getId());
+    public ResponseEntity<?> showReview(@RequestHeader("Authorization") String token) {
+        String memberId = jwtUtil.getId(token); // 토큰에서 사용자 ID 추출
+        Member member = mypageService.getMemberById(memberId);
+        if (member != null) {
             List<Review> reviews = mypageService.FindReviews(member);
+            System.out.println(reviews);
             return ResponseEntity.ok(reviews);
-        } else {
+        }
+            else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("사용자에게 접근 권한이 없습니다");
         }
     }
