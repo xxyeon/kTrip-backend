@@ -11,11 +11,8 @@ import org.springframework.stereotype.Repository;
 public interface MemberRepository extends JpaRepository<Member,Integer>
 {
     Boolean existsById(String id);
+    Boolean existsByNickname(String nickname);
     Member findById(String id);
     Boolean existsByRefreshToken(String refreshToken);
     Member findByRefreshToken(String refreshtoken);
-
-
-
-
 }

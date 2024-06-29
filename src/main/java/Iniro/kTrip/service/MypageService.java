@@ -42,8 +42,13 @@ public class MypageService {
         String newPassword = passwordDto.getNewPassword();
         Member member = validatePassword(id, currentPassword);
         if (member != null) {
-            member.updatepassword(bCryptPasswordEncoder.encode(newPassword));
-            memberRepository.save(member);
+            if (!currentPassword.equals(newPassword)){ // 현재 비밀번호와 새로운 비밀번호가 다를 때만 변경.
+                member.updatepassword(bCryptPasswordEncoder.encode(newPassword));
+                memberRepository.save(member);
+            }
+            else{
+                throw new IllegalArgumentException();
+            }
         }
 
     }
@@ -53,10 +58,14 @@ public class MypageService {
         String currentNickname = nicknameDto.getCurrentNickname();
         String newNickname = nicknameDto.getNewNickname();
         Member member = memberRepository.findById(id);
-
-        if (member != null && member.getNickname().equals(currentNickname)) {
-            member.setNickname(newNickname);
-            memberRepository.save(member);
+        if (!memberRepository.existsByNickname(newNickname)){
+            if (member != null && member.getNickname().equals(currentNickname)) {
+                member.setNickname(newNickname);
+                memberRepository.save(member);
+            }
+        }
+        else{
+            throw new IllegalArgumentException("이미 존재하는 닉네임이 있습니다.");
         }
 
     }

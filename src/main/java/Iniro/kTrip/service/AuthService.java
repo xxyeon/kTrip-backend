@@ -59,7 +59,7 @@ public class AuthService {
             return null;
         }
 
-        String accessToken = jwtUtil.createAccessToken(member, 60000);
+        String accessToken = jwtUtil.createAccessToken("Authorization",member, 60000);
         return accessToken;
     }
 
