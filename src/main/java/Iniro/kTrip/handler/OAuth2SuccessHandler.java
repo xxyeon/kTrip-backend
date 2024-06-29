@@ -34,7 +34,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         log.info("핸들러 접근");
 
-        String redirectUri = "http://localhost:3000";
+        String redirectUri = "http://localhost:3000/token";
         String targetUrl;
 
         CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
