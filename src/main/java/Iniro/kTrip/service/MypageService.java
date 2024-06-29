@@ -6,7 +6,6 @@ import Iniro.kTrip.dao.FavoriteRepository;
 import Iniro.kTrip.domain.Favorite;
 import Iniro.kTrip.domain.Member;
 import Iniro.kTrip.domain.Review;
-import Iniro.kTrip.domain.Want;
 import Iniro.kTrip.dto.NicknameDto;
 import Iniro.kTrip.dto.PasswordDto;
 import Iniro.kTrip.repository.MemberRepository;
