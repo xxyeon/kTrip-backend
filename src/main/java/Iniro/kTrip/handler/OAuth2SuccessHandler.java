@@ -6,6 +6,7 @@ import Iniro.kTrip.dto.MemberDto;
 import Iniro.kTrip.jwt.JWTUtil;
 import Iniro.kTrip.repository.MemberRepository;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
+import java.util.Date;
 
 @Component
 @RequiredArgsConstructor
@@ -37,7 +39,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         //MemberDto memberDto = new MemberDto(member.getMember_id(), member.getId(), member.getPassword(), member.getEmail(), member.getNickname(), member.getName());
         String token = jwtProvider.createAccessToken(member, 100000);
 
-
+        response.addHeader("Authorization", token);
 
         targetUrl = UriComponentsBuilder.fromUriString(redirectUri)
                 .queryParam("token", token)
@@ -46,5 +48,22 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         clearAuthenticationAttributes(request);
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
         //response.sendRedirect("http://localhost:8080/auth/oauth-response/"+token+"/3600");
+
+
+    }
+    private void addRefreshEntity(String id, String refresh, int expiredMs) {
+        Date date = new Date(System.currentTimeMillis() + expiredMs);
+        Member member = memberRepository.findById(id);
+        if (member != null) {
+            member.setRefreshToken(refresh);
+            member.setExpiration(date.toString());
+            memberRepository.save(member);
+        }
+    }
+    private Cookie createCookie(String key, String value) {
+        Cookie cookie = new Cookie(key, value);
+        cookie.setMaxAge(24 * 60 * 60);
+        cookie.setHttpOnly(true);
+        return cookie;
     }
 }

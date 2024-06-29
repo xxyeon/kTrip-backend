@@ -149,13 +149,6 @@ public class TripService {
 
     }
 
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class Result<T> {
-        private T result;
-    }
-
     public Object getTripInfo(String contentId) {
         String reqUrl = null;
         try {

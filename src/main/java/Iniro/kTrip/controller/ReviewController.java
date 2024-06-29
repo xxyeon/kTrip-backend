@@ -22,13 +22,15 @@ public class ReviewController {
     @Autowired
     private MemberRepository memberRepository;
     @GetMapping()
-    public ResponseEntity<?> getReviewListJson(@AuthenticationPrincipal MemberDetails memberDetails, @RequestParam("ctypeid") int ctypeid, @RequestParam("cid") int cid) {
-        if (memberDetails != null) {
-            List<ReviewDto> reviews = reviewService.getReviewDtos(ctypeid, cid);
-            return ResponseEntity.ok(reviews);
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("사용자에게 접근 권한이 없습니다");
-        }
+    public ResponseEntity<?> getReviewListJson(/*@AuthenticationPrincipal MemberDetails memberDetails,*/ @RequestParam("ctypeid") int ctypeid, @RequestParam("cid") int cid) {
+//        if (memberDetails != null) {
+//            List<ReviewDto> reviews = reviewService.getReviewDtos(ctypeid, cid);
+//            return ResponseEntity.ok(reviews);
+//        } else {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("사용자에게 접근 권한이 없습니다");
+//        }
+        List<ReviewDto> reviews = reviewService.getReviewDtos(ctypeid, cid);
+        return ResponseEntity.ok(reviews);
     }
 
     @PostMapping("/write")

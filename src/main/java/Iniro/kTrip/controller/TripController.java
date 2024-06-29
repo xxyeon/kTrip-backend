@@ -1,7 +1,6 @@
 package Iniro.kTrip.controller;
 
 import Iniro.kTrip.service.TripService;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -49,9 +48,10 @@ public class TripController {
 
             List<Map<String, Object>> details = (List<Map<String, Object>>) tripService.getDetailIntro(contentid, contenttypeid);
             mergeDetailsList(result, details);
-
-            details = (List<Map<String, Object>>) tripService.getDetailInfo(contentid, contenttypeid);
-            mergeDetailsList(result, details);
+            if (!contenttypeid.equals("25")){
+                details = (List<Map<String, Object>>) tripService.getDetailInfo(contentid, contenttypeid);
+                mergeDetailsList(result, details);
+            }
 
             resultList.add(result);
 
@@ -59,13 +59,16 @@ public class TripController {
             return ResponseEntity.status(500).body("Error fetching data: " + e.getMessage());
         }
 
-        TripService.Result jsonResList = new TripService.Result<>();
-        jsonResList.setResult(resultList);
-
         // JSON 형식으로 배열로 반환
-        return ResponseEntity.ok().body(jsonResList);
+        return ResponseEntity.ok().body(resultList);
     }
+    @GetMapping("/course")
+    public ResponseEntity<?> getCourse (
+            @RequestParam(name = "contentid", required = false) String contentid,
+            @RequestParam(name = "contenttypeid", required = false) String contenttypeid) throws URISyntaxException{
 
+        return ResponseEntity.ok().body(tripService.getDetailInfo(contentid, contenttypeid));
+    }
     @GetMapping("/search")
     public ResponseEntity<?> getTrip(
             @RequestParam(name = "keyword", required = false) String keyword,
