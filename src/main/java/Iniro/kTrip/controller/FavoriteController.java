@@ -1,16 +1,14 @@
 package Iniro.kTrip.controller;
 
+import Iniro.kTrip.dao.FavoriteRepository;
 import Iniro.kTrip.domain.Favorite;
 import Iniro.kTrip.domain.Member;
-import Iniro.kTrip.dto.MemberDetails;
-import Iniro.kTrip.dto.ReviewDto;
 import Iniro.kTrip.jwt.JWTUtil;
 import Iniro.kTrip.repository.MemberRepository;
 import Iniro.kTrip.service.FavoriteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 @RestController
@@ -21,6 +19,8 @@ public class FavoriteController {
     private FavoriteService favoriteService;
     @Autowired
     private MemberRepository memberRepository;
+    @Autowired
+    private FavoriteRepository favoriteRepository;
     @Autowired
     private JWTUtil jwtUtil;
     @PostMapping("/toggle")
@@ -49,13 +49,13 @@ public class FavoriteController {
     }
 
     @GetMapping("/load")
-    public ResponseEntity<?> loadFavoriteSpot(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<?> loadFavoriteSpot(@RequestHeader("Authorization") String token, @RequestParam(name = "cid") String cid) {
         String memberId = jwtUtil.getId(token);
         Member member = memberRepository.findById(memberId);
-        if (member != null) {
-            List<Favorite> favorites = favoriteService.favoriteByMid(member);
-            return ResponseEntity.ok(favorites);
+        if (favoriteRepository.existsByMemberAndCid(member, cid)) {
+            return ResponseEntity.ok(true);
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("사용자에게 접근 권한이 없습니다");
     }
+
 }
