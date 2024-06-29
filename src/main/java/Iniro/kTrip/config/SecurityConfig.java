@@ -63,7 +63,7 @@ public class SecurityConfig{
         http.csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // CORS 설정 추가
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/", "/oauth2/**", "/signUp", "/signIn", "/trip", "/trip/*", "/trip/**", "/reviews", "/mypage", "/login").permitAll()
+                        .requestMatchers("/", "/login/*", "/signUp", "/signIn", "/trip", "/trip/*", "/trip/**", "/reviews", "/mypage", "/login").permitAll()
                         .requestMatchers("/public/**").permitAll()
                         .anyRequest().authenticated()
                 )
@@ -80,11 +80,10 @@ public class SecurityConfig{
                 )
 
                 .oauth2Login(oauth2 -> oauth2
-                        // .loginPage("/login-oauth2")
-                        .redirectionEndpoint(endpoint -> endpoint.baseUri("/login/oauth2/code/naver"))
+                        .redirectionEndpoint(endpoint -> endpoint.baseUri("/"))
                         .userInfoEndpoint(endpoint -> endpoint.userService(oAuth2UserService))
                         .successHandler(oAuth2SuccessHandler)
-                        .defaultSuccessUrl("/", true)
+                        //.defaultSuccessUrl("/", true)
                         .failureUrl("/login?error=true")
                 )
                 .sessionManagement(session -> session
