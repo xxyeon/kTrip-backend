@@ -6,6 +6,7 @@ import Iniro.kTrip.domain.Member;
 import Iniro.kTrip.jwt.JWTUtil;
 import Iniro.kTrip.repository.MemberRepository;
 import Iniro.kTrip.service.FavoriteService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.*;
 @RestController
 @CrossOrigin(origins = "*") // CORS 에러 방지
 @RequestMapping("/favorite")
+@Slf4j
 public class FavoriteController {
     @Autowired
     private FavoriteService favoriteService;
