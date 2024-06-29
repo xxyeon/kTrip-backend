@@ -14,31 +14,32 @@ public class FavoriteService {
 
     @Autowired
     private FavoriteRepository favoriteRepository;
-    public Favorite craeteFavorite(String cid, Member member){
+
+    public Favorite createFavorite(String cid, Member member) {
         return Favorite.builder()
                 .member(member)
                 .cid(cid)
                 .build();
     }
+
     @Transactional
-    public void addFavoriteSpot(String cid,Member member) throws IllegalAccessException {
-          if(favoriteRepository.existsByMemberAndCid(member, cid)){
-             throw new IllegalAccessException("이미 즐겨찾기되어있는 여행지입니다.");
-          }
-          else{
-              favoriteRepository.save(craeteFavorite(cid,member));
-          }
+    public void addFavoriteSpot(String cid, Member member) throws IllegalAccessException {
+        if (favoriteRepository.existsByMemberAndCid(member, cid)) {
+            throw new IllegalAccessException("이미 즐겨찾기되어있는 여행지입니다.");
+        } else {
+            favoriteRepository.save(createFavorite(cid, member));
+        }
     }
 
     @Transactional
-    public void deleteFavoriteSpot(String cid, Member member) throws IllegalAccessException{
-        if(!favoriteRepository.existsByMemberAndCid(member, cid)){
+    public void deleteFavoriteSpot(String cid, Member member) throws IllegalAccessException {
+        if (!favoriteRepository.existsByMemberAndCid(member, cid)) {
             throw new IllegalAccessException("즐겨찾기 정보가 없습니다.");
-        }
-        else{
+        } else {
             favoriteRepository.deleteFavoriteByMemberAndCid(member, cid);
         }
     }
+
     @Transactional
     public List<Favorite> favoriteByMid(Member member) {
         return favoriteRepository.findCidByMember(member);

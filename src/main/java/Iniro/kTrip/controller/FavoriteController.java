@@ -24,31 +24,36 @@ public class FavoriteController {
     @Autowired
     private JWTUtil jwtUtil;
     @PostMapping("/toggle")
-    public void toggleFavoriteSpot(
-            @RequestHeader("Authorization") String token,
-            @RequestParam(name = "cid", required = true) String cid,
-            @RequestParam(name = "toggle", required = true) int toggle) throws IllegalAccessException {
-        String memberId = jwtUtil.getId(token);
-        Member member=memberRepository.findById(memberId);
-        if(member!=null)
-        {
-            if(toggle == 0){
-                favoriteService.deleteFavoriteSpot(cid, member);
-            }
-            else if(toggle == 1){
-                favoriteService.addFavoriteSpot(cid, member);
-            }
-        }
+    public ResponseEntity<?> toggleFavorite(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> params) {
+        try {
+            String cid = params.get("cid");
+            int toggle = Integer.parseInt(params.get("toggle"));
+            String memberId = jwtUtil.getId(token);
+            Member member = memberRepository.findById(memberId);
 
+            if (member != null) {
+                if (toggle == 1) {
+                    favoriteService.addFavoriteSpot(cid, member);
+                } else if (toggle == 0) {
+                    favoriteService.deleteFavoriteSpot(cid, member);
+                }
+                return ResponseEntity.ok("즐겨찾기 업데이트 성공");
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("사용자에게 접근 권한이 없습니다");
+            }
+        } catch (NumberFormatException e) {
+            return ResponseEntity.badRequest().body("잘못된 toggle 값입니다");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류 발생");
+        }
     }
+
     @GetMapping("/load")
-    public ResponseEntity<?> loadFavoriteSpot(@RequestHeader("Authorization") String token)
-    {
+    public ResponseEntity<?> loadFavoriteSpot(@RequestHeader("Authorization") String token) {
         String memberId = jwtUtil.getId(token);
-        Member member=memberRepository.findById(memberId);
-        if(member!=null)
-        {
-            List<Favorite> favorites =favoriteService.favoriteByMid(member);
+        Member member = memberRepository.findById(memberId);
+        if (member != null) {
+            List<Favorite> favorites = favoriteService.favoriteByMid(member);
             return ResponseEntity.ok(favorites);
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("사용자에게 접근 권한이 없습니다");
