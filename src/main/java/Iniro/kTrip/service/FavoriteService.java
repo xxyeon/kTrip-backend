@@ -15,19 +15,20 @@ public class FavoriteService {
     @Autowired
     private FavoriteRepository favoriteRepository;
 
-    public Favorite createFavorite(String cid, Member member) {
+    public Favorite createFavorite(String cid, String cname, Member member) {
         return Favorite.builder()
                 .member(member)
                 .cid(cid)
+                .cname(cname)
                 .build();
     }
 
     @Transactional
-    public void addFavoriteSpot(String cid, Member member) throws IllegalAccessException {
+    public void addFavoriteSpot(String cid, String cname, Member member) throws IllegalAccessException {
         if (favoriteRepository.existsByMemberAndCid(member, cid)) {
             throw new IllegalAccessException("이미 즐겨찾기되어있는 여행지입니다.");
         } else {
-            favoriteRepository.save(createFavorite(cid, member));
+            favoriteRepository.save(createFavorite(cid, cname,member));
         }
     }
 
