@@ -29,13 +29,14 @@ public class FavoriteController {
     public ResponseEntity<?> toggleFavorite(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> params) {
         try {
             String cid = params.get("cid");
+            String cname = params.get("cname");
             int toggle = Integer.parseInt(params.get("toggle"));
             String memberId = jwtUtil.getId(token);
             Member member = memberRepository.findById(memberId);
 
             if (member != null) {
                 if (toggle == 1) {
-                    favoriteService.addFavoriteSpot(cid, member);
+                    favoriteService.addFavoriteSpot(cid, cname, member);
                 } else if (toggle == 0) {
                     favoriteService.deleteFavoriteSpot(cid, member);
                 }
@@ -58,6 +59,6 @@ public class FavoriteController {
             return ResponseEntity.ok(true);
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("사용자에게 접근 권한이 없습니다");
-    }
+   }
 
 }
