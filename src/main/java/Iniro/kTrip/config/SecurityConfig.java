@@ -63,7 +63,7 @@ public class SecurityConfig{
         http.csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // CORS 설정 추가
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/", "/login/*", "/signUp", "/signUp/*", "/signIn","/logout", "/trip", "/trip/*", "/trip/**", "/reviews", "/mypage", "/login").permitAll()
+                        .requestMatchers("/", "/login/*", "/signUp", "/signUp/*", "/signIn","/logout", "/trip", "/trip/*", "/trip/**", "/reviews",  "/login").permitAll()
                         .requestMatchers("/public/**").permitAll()
                         .anyRequest().authenticated()
                 )
