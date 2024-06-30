@@ -23,4 +23,6 @@ public class Favorite {
     @Column
     private String cid;
 
+    @Column
+    private String cname;
 }
