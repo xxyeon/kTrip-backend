@@ -84,11 +84,12 @@ public class MypageController {
         }
     }
 
-    @DeleteMapping("/review/{rid}")
-    @PreAuthorize("hasAuthority('DELETE_REVIEW')")
-    public ResponseEntity<?> deleteReview(@AuthenticationPrincipal MemberDetails memberDetails, @PathVariable int rid) {
-        if (memberDetails != null) {
-            Member member = mypageService.getMemberById(memberDetails.getId());
+    @PostMapping("/revdelete")
+    public ResponseEntity<?> deleteReview(@RequestHeader("Authorization") String token, @RequestBody Map<String, Integer> requestBody) {
+        int rid = requestBody.get("rid");
+        String memberId = jwtUtil.getId(token);
+        Member member = mypageService.getMemberById(memberId);
+        if (member!= null) {
             mypageService.deleteReview(rid, member);
             return ResponseEntity.ok().build();
         } else {
@@ -107,11 +108,12 @@ public class MypageController {
         }
     }
 
-    @DeleteMapping("/favorite/{fid}")
-    @PreAuthorize("hasAuthority('DELETE_FAVORITE')")
-    public ResponseEntity<?> deleteFavorite(@AuthenticationPrincipal MemberDetails memberDetails, @PathVariable int fid) {
-        if (memberDetails != null) {
-            Member member = mypageService.getMemberById(memberDetails.getId());
+    @PostMapping("/favdelete")
+    public ResponseEntity<?> deleteFavorite(@RequestHeader("Authorization") String token, @RequestBody Map<String, Integer> requestBody) {
+        int fid = requestBody.get("fid");
+        String memberId = jwtUtil.getId(token);
+        Member member = mypageService.getMemberById(memberId);
+        if (member != null) {
             mypageService.deleteFavorite(fid, member);
             return ResponseEntity.ok().build();
         } else {
